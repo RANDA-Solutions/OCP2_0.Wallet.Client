@@ -1,0 +1,13 @@
+@import "/src/styles/variables";
+
+.tw-page-wrapper {
+    background-color: $blueLight;
+}
+.container {
+    max-width: 100% !important;
+}
+
+:host ::ng-deep .public-page {
+    min-height: 500px;
+    color: $blueDark;
+}

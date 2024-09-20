@@ -1,0 +1,11 @@
+<div class="tw-page-wrapper d-flex flex-column mx-auto">
+    <app-nav-menu *ngIf="appService.disconnectedPage == false"></app-nav-menu>
+    <div class="parent-spacer" *ngIf="appService.disconnectedPage == true">&nbsp;</div>
+    <div class="bg-blueDark flex-column flex-fill d-flex">
+        <router-outlet></router-outlet>
+        <div class="row justify-content-center">
+            <p-toast class="tw-toast" position="bottom-center" key="main" [baseZIndex]="5000"></p-toast>
+        </div>
+    </div>
+    <app-site-footer></app-site-footer>
+</div>

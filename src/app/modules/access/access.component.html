@@ -1,0 +1,17 @@
+<div *ngIf="showMe == false; else theContent" class="d-flex flex-column">Loading...</div>
+<ng-template #theContent>
+    <div class="tw-page-wrapper d-flex flex-column mx-auto">
+        <div class="col-auto">
+            <section class="container-fluid p-md-5">
+                <div
+                    id="main-row"
+                    class="align-items-center justify-content-around flex-wrap row row-cols-1 row-cols-lg-2"
+                >
+                    <div class="col-12">
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</ng-template>

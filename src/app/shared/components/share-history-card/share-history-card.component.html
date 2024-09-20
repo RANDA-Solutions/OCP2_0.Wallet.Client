@@ -1,0 +1,82 @@
+<div class="container">
+    <div
+        class="col-12 p-4 rounded-top bg-white"
+        [ngClass]="{
+            'rounded-top': showDetails,
+            rounded: !showDetails,
+        }"
+    >
+        <div class="d-flex justify-content-between">
+            <div class="fs-4 fw-bold">
+                {{ formatDateToLocal(share.createdAt) }} - {{ share.credentialCount }} Credential{{
+                    share.credentialCount > 1 ? "s" : ""
+                }}
+                Shared
+            </div>
+            <div *ngIf="showDetails">
+                <a (click)="toggleExpand()">
+                    <fa-icon [icon]="faChevronUp" size="lg"></fa-icon>
+                </a>
+            </div>
+
+            <div *ngIf="!showDetails">
+                <a (click)="toggleExpand()">
+                    <fa-icon [icon]="faChevronDown" size="lg"></fa-icon>
+                </a>
+            </div>
+        </div>
+
+        <div class="fs-6 text-blueBase fw-bold">
+            {{ share.email }}
+            <span *ngIf="!!share.description"> | {{ share.description }} </span>
+        </div>
+    </div>
+
+    <div class="bg-blueLight py-5 px-2 p-md-5" *ngIf="showDetails">
+        <div *ngIf="showSpinner == true; else displayDetails" class="d-flex flex-column mt-4">
+            <app-spinner id="share-history-details-spinner" [message]="'Loading share history details'"></app-spinner>
+        </div>
+        <ng-template #displayDetails>
+            <div
+                *ngIf="
+                    !shareDetails ||
+                    (shareDetails.verifiableCredentialIds.length == 0 &&
+                        shareDetails.credentialCollectionIds.length == 0)
+                "
+                class="alert alert-warning"
+            >
+                This share no longer contains any collections or credentials from your wallet.
+            </div>
+            <div>
+                <div
+                    class="d-flex gap-5 mb-5 flex-wrap justify-content-center"
+                    [ngClass]="{
+                        'd-none': !shareDetails || shareDetails.verifiableCredentialIds.length == 0,
+                    }"
+                    *ngIf="shareDetails && shareDetails.verifiableCredentialIds.length >= 0"
+                >
+                    <div
+                        *ngFor="let verifiableCredentialId of shareDetails.verifiableCredentialIds"
+                        class="col-12 col-md-5"
+                        app-credential-card
+                        [verifiableCredentialId]="verifiableCredentialId"
+                    ></div>
+                </div>
+                <div
+                    class="d-flex gap-5 flex-wrap justify-content-center"
+                    [ngClass]="{
+                        'd-none': !shareDetails || shareDetails.credentialCollectionIds.length == 0,
+                    }"
+                    *ngIf="shareDetails && shareDetails.credentialCollectionIds.length >= 0"
+                >
+                    <div
+                        *ngFor="let credentialCollectionId of shareDetails.credentialCollectionIds"
+                        class="col-12 col-md-5"
+                        app-credential-collection-card
+                        [credentialCollectionId]="credentialCollectionId"
+                    ></div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

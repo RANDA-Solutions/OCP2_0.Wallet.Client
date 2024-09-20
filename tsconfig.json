@@ -1,0 +1,66 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@auth/*": [
+        "app/auth/*"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@dom_comps/*": [
+        "app/modules/domains/components/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "@environment/*": [
+        "environments/*"
+      ],
+      "@modules/*": [
+        "app/modules/*"
+      ],
+      "@mocks/*": [
+        "app/mocks/*"
+      ],
+      "@contracts/*": [
+        "app/shared/contracts/*"
+      ],
+      "@directives/*": [
+        "app/modules/directives/*"
+      ],
+      "@node_modules/*": [
+        "../node_modules/*"
+      ],
+      "@root/*": [
+        "./*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ]
+    },
+    "module": "es2020",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  }
+}

@@ -1,0 +1,63 @@
+<div class="bg-blueDark">
+    <div id="packagerHeader" class="d-flex flex-column flex-lg-row gap-4 py-5">
+        <div class="container col-12 align-content-center">
+            <div *ngIf="collectionSpinner == true; else headerContent" class="d-flex flex-column">
+                <app-spinner id="collection-details-spinner" [message]="'Loading collection'"></app-spinner>
+            </div>
+
+            <ng-template #headerContent>
+                <h1 class="d-flex gap-3 justify-content-center align-items-center text-white">
+                    {{ collection.name }}
+                </h1>
+
+                <div class="col-12 col-md-6 offset-md-3 d-flex justify-content-between mt-4 text-white fs-6">
+                    <div class="d-flex gap-2 align-items-center fw-light font-size-sm">
+                        <a (click)="shareCollection(collection.credentialCollectionId)" title="Share Collection">
+                            <fa-icon [icon]="faShare" size="lg"></fa-icon>
+                        </a>
+
+                        <span *ngIf="collection.shareCount > 0" class="fw-light">
+                            {{ collection.shareCount }} shares
+                        </span>
+                    </div>
+
+                    <a role="button" *ngIf="collection.canDelete" (click)="handleShowDelete(collection)">
+                        <fa-icon class="text-white" [icon]="faTrash" size="lg"></fa-icon>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 offset-md-3 text-white fs-6">
+                    <hr />
+                    <div class="d-flex gap-2 align-items-center fw-light font-size-sm mb-1">
+                        Created on {{ formatDateToLocal(collection.createdAt) }}
+                    </div>
+                    <p class="font-size-sm mb-4 overflow-wrap-anywhere">
+                        {{ collection.description }}
+                    </p>
+                    <div class="text-center">
+                        <a
+                            [routerLink]="['/collections', collection.credentialCollectionId, 'edit']"
+                            type="submit"
+                            class="btn btn-primary"
+                            >Edit Collection</a
+                        >
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="bg-blueLightest pb-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-lg-2 g-4">
+                <div
+                    *ngFor="let verifiableCredentialItem of collection.verifiableCredentialItems"
+                    app-credential-card
+                    [showSelect]="false"
+                    [showDelete]="false"
+                    [verifiableCredentialId]="verifiableCredentialItem.id"
+                    class="col"
+                ></div>
+            </div>
+        </div>
+    </div>
+</div>

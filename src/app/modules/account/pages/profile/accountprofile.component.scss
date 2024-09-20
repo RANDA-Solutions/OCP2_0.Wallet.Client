@@ -1,0 +1,30 @@
+@import "/src/styles/variables";
+
+#profile-spinner {
+    min-height: 600px;
+}
+
+.heading {
+    color: $blueDark;
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.max-width-125 {
+    max-width: 125px;
+}
+
+label {
+    color: $blueBase;
+}
+
+.editMode {
+    background-color: transparent;
+    input {
+        background-color: transparent !important;
+        border: 0px;
+        border-radius: 0px !important;
+        border-bottom: 1px solid $blueDark;
+    }
+}

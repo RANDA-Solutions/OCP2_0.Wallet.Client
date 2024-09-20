@@ -1,0 +1,25 @@
+<div class="container py-5">
+    <div class="d-flex flex-column gap-3 py-5 text-white text-center">
+        <div class="h1 col-12">Share History</div>
+        <p class="col-12">
+            View a comprehensive history of all instances where you have shared one or more of your credentials with
+            others.
+        </p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="d-flex flex-column gap-5 mt-0">
+        <div *ngIf="showSpinner == true; else displayResults" class="d-flex flex-column mt-4">
+            <app-spinner id="share-history-results-spinner" [message]="'Loading share history'"></app-spinner>
+        </div>
+        <ng-template #displayResults>
+            <div *ngIf="!shareListResponses || shareListResponses.length == 0" class="alert alert-info">
+                You have not shared any credentials from your wallet.
+            </div>
+            <div *ngIf="shareListResponses && shareListResponses.length >= 0" class="row row-cols-1 g-3">
+                <div *ngFor="let share of shareListResponses" app-share-history-card [share]="share" class="col"></div>
+            </div>
+        </ng-template>
+    </div>
+</div>

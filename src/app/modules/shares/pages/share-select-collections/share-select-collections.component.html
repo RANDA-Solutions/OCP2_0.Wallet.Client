@@ -1,0 +1,166 @@
+<div class="d-flex flex-column">
+    <div class="bg-blueBase p-4">
+        <form id="addEditForm" [formGroup]="addEditForm" (ngSubmit)="handleSubmitForAdd()">
+            <div class="container py-5 mb-5">
+                <div class="d-flex flex-column flex-lg-row gap-5">
+                    <div class="text-white w-100">
+                        <div class="h1 col-12">Share Collections</div>
+                        <p class="col-12">
+                            Select one or more collections for easier and faster sharing of credentials with employers
+                            and institutions.
+                        </p>
+                    </div>
+                    <div class="w-100">
+                        <div
+                            id="collectionList"
+                            class="container"
+                            [ngClass]="{ 'is-invalid': hasErrorForAdd('credentialCollectionItems') }"
+                        >
+                            <div class="fs-5 text-center mb-2">Collection List</div>
+                            <div class="d-flex flex-column gap-3" formArrayName="credentialCollectionItems">
+                                <div
+                                    *ngFor="
+                                        let item of getFormArrayForAdd('credentialCollectionItems').controls;
+                                        let i = index
+                                    "
+                                    [formGroupName]="i"
+                                >
+                                    <div
+                                        class="d-flex gap-1 justify-content-between bg-white text-blueDark p-2 rounded"
+                                    >
+                                        <div class="d-flex gap-2 align-items-center font-size-sm">
+                                            <!-- <i class="fa fa-bars"></i> -->
+                                            <span>{{ getFormArrayItemValueForAdd(item, "name") }}</span>
+                                        </div>
+                                        <div id="ListItemRemove" class="d-flex gap-2 align-items-center text-nowrap">
+                                            <a
+                                                (click)="
+                                                    handleRemoveCollection(i, getFormArrayItemValueForAdd(item, 'id'))
+                                                "
+                                            >
+                                                Remove
+                                                <fa-icon [icon]="faTimes"></fa-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="hasErrorForAdd('credentialCollectionItems')">
+                            Please select one or more collections from below.
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary">Share Collections</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="bg-blueLightest pb-5">
+        <div class="container">
+            <div class="d-flex flex-column gap-5 mt-0">
+                <form [formGroup]="searchForm" class="form-reset">
+                    <nav class="navbar navbar-expand-lg mt-4 filter-group">
+                        <div class="container-fluid gap-4 flex-column-reverse flex-lg-row">
+                            <ul class="navbar-nav flex-column flex-lg-row me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        role="button"
+                                        (click)="setFormControlValueForSearch('sortBy', 'name')"
+                                        [ngClass]="{
+                                            'p-2 bg-blueLight rounded border':
+                                                getFormControlValueForSearch('sortBy') == 'name',
+                                        }"
+                                    >
+                                        A-Z
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        role="button"
+                                        (click)="setFormControlValueForSearch('sortBy', 'createdAt')"
+                                        [ngClass]="{
+                                            'p-2 bg-blueLight rounded border':
+                                                getFormControlValueForSearch('sortBy') == 'createdAt',
+                                        }"
+                                    >
+                                        Date Added
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        role="button"
+                                        (click)="setFormControlValueForSearch('sortBy', 'shareCount')"
+                                        [ngClass]="{
+                                            'p-2 bg-blueLight rounded border':
+                                                getFormControlValueForSearch('sortBy') == 'shareCount',
+                                        }"
+                                    >
+                                        Frequently Shared
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="input-group search-group shadow">
+                                <label class="input-group-text">
+                                    <fa-icon [icon]="faSearch"></fa-icon>
+                                </label>
+                                <input
+                                    class="form-control"
+                                    id="filter-search"
+                                    formControlName="keywords"
+                                    type="search"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                />
+                            </div>
+                        </div>
+                    </nav>
+                </form>
+                <div *ngIf="searchSpinner == true; else displayResults" class="d-flex flex-column">
+                    <app-spinner id="collection-results-spinner" [message]="'Loading collections'"></app-spinner>
+                </div>
+                <ng-template #displayResults>
+                    <div
+                        *ngIf="!credentialCollectionIds || credentialCollectionIds.length == 0"
+                        class="alert alert-info"
+                    >
+                        No collections have been created in your wallet.
+                    </div>
+
+                    <div *ngIf="credentialCollectionIds.length > 0" class="row row-cols-1 row-cols-md-2 g-4">
+                        <div
+                            *ngFor="let credentialCollectionId of credentialCollectionIds"
+                            app-credential-collection-card
+                            [credentialCollectionId]="credentialCollectionId"
+                            [showSelect]="true"
+                            [selected]="isCollectionSelected(credentialCollectionId)"
+                            (onSelect)="handleSelectCollection($event)"
+                            class="col"
+                        ></div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="addEditForm.valid">
+    <button
+        type="submit"
+        form="addEditForm"
+        [disabled]="addOrEditSpinner"
+        class="position-fixed bottom-0 border-0 p-3 bg-limeGreen text-center w-100 btn-custom"
+    >
+        <span class="h2">Share Collections</span>
+        <span class="spinner-border spinner-border-sm" role="status" *ngIf="addOrEditSpinner" aria-hidden="true"></span>
+    </button>
+</div>
+<ng-template #noFilterAvailable
+    ><ul class="dropdown-menu">
+        <li class="text-center">None available</li>
+    </ul></ng-template
+>

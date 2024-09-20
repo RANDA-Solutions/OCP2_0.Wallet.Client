@@ -1,0 +1,349 @@
+<div class="d-flex flex-column">
+    <div class="bg-blueDark p-4">
+        <form id="addEditForm" [formGroup]="addEditForm" (ngSubmit)="handleSubmitForAdd()">
+            <input type="hidden" formControlName="credentialCollectionId" />
+            <div class="container py-5 mb-5">
+                <div class="d-flex flex-column flex-lg-row gap-5">
+                    <div class="text-white w-100">
+                        <div class="h1 col-12">{{ isEdit() ? "Edit" : "Create New" }} Collection</div>
+                        <p class="col-12">
+                            Select frequently grouped credentials as a collection for easier and faster sharing with
+                            employers and institutions.
+                        </p>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div class="col-12 mb-4">
+                                    <input
+                                        id="collectionName"
+                                        formControlName="name"
+                                        placeholder="Collection Name"
+                                        type="text"
+                                        class="form-control border border-dark bg-light"
+                                        [ngClass]="{ 'is-invalid': hasErrorForAdd('name') }"
+                                    />
+                                    <div
+                                        class="invalid-feedback"
+                                        *ngIf="hasErrorForAdd('name', 'maxLengthConditional')"
+                                    >
+                                        Please enter no more than 100 characters.
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="hasErrorForAdd('name', 'required')">
+                                        Please provide a name for your collection.
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <textarea
+                                        id="collectionDescription"
+                                        formControlName="description"
+                                        placeholder="Description"
+                                        rows="4"
+                                        class="form-control border border-dark bg-light"
+                                        [ngClass]="{ 'is-invalid': hasErrorForAdd('description') }"
+                                    ></textarea>
+                                    <div
+                                        class="invalid-feedback"
+                                        *ngIf="hasErrorForAdd('description', 'maxLengthConditional')"
+                                    >
+                                        Please enter no more than 1000 characters.
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="hasErrorForAdd('description', 'required')">
+                                        Please provide a description for your collection.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div
+                            id="collectionList"
+                            class="container"
+                            [ngClass]="{ 'is-invalid': hasErrorForAdd('verifiableCredentialItems') }"
+                        >
+                            <div class="fs-5 text-center mb-2">Credential List</div>
+                            <div class="d-flex flex-column gap-3" formArrayName="verifiableCredentialItems">
+                                <div
+                                    *ngFor="
+                                        let item of getFormArrayForAdd('verifiableCredentialItems').controls;
+                                        let i = index
+                                    "
+                                    [formGroupName]="i"
+                                >
+                                    <div
+                                        class="d-flex gap-1 justify-content-between bg-white text-blueDark p-2 rounded"
+                                    >
+                                        <div class="d-flex gap-2 align-items-center font-size-sm">
+                                            <span>{{ getFormArrayItemValueForAdd(item, "name") }}</span>
+                                        </div>
+                                        <div id="ListItemRemove" class="d-flex gap-2 align-items-center text-nowrap">
+                                            <a
+                                                (click)="
+                                                    handleRemoveCredential(i, getFormArrayItemValueForAdd(item, 'id'))
+                                                "
+                                            >
+                                                Remove
+                                                <fa-icon [icon]="faTimes"></fa-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="hasErrorForAdd('verifiableCredentialItems')">
+                            Please select one or more credentials from below.
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary" [disabled]="addOrEditSpinner">
+                                {{ isEdit() ? "Save Changes" : "Create Collection" }}
+                                <span
+                                    class="spinner-border spinner-border-sm"
+                                    role="status"
+                                    *ngIf="addOrEditSpinner"
+                                    aria-hidden="true"
+                                ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="bg-blueLightest pb-5">
+        <div class="container">
+            <div class="d-flex flex-column gap-5 mt-0">
+                <form [formGroup]="searchForm" class="form-reset">
+                    <nav class="navbar navbar-expand-lg mt-4 filter-group">
+                        <div class="container-fluid gap-4 flex-column-reverse flex-lg-row">
+                            <ul class="navbar-nav flex-column flex-lg-row me-auto mb-2 mb-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link"
+                                        role="button"
+                                        (click)="resetFiltersForSearch()"
+                                        [ngClass]="{
+                                            'p-2 bg-blueLight rounded border': !hasFiltersForSearch(),
+                                        }"
+                                    >
+                                        All
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <div
+                                        *ngIf="!!getFormControlValueForSearch('issuerName'); else selectIssuerName"
+                                        class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                    >
+                                        {{ getFormControlValueForSearch("issuerName") }}
+                                        <!--                                         <i
+                                            class="fa fa-times"
+                                            (click)="setFormControlValueForSearch('issuerName', null)"
+                                        ></i> -->
+                                        <fa-icon
+                                            (click)="setFormControlValueForSearch('issuerName', null)"
+                                            [icon]="faTimes"
+                                        ></fa-icon>
+                                    </div>
+                                    <ng-template #selectIssuerName>
+                                        <a
+                                            class="nav-link dropdown-toggle"
+                                            href="#"
+                                            role="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            Issuer
+                                        </a>
+                                        <ul
+                                            class="dropdown-menu"
+                                            *ngIf="
+                                                credentialsSearchResponse.issuerNames.length > 0;
+                                                else noFilterAvailable
+                                            "
+                                        >
+                                            <li *ngFor="let issuerName of credentialsSearchResponse.issuerNames">
+                                                <button
+                                                    class="dropdown-item"
+                                                    type="button"
+                                                    (click)="setFormControlValueForSearch('issuerName', issuerName)"
+                                                >
+                                                    {{ issuerName }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </ng-template>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <div
+                                        *ngIf="
+                                            !!getFormControlValueForSearch('achievementType');
+                                            else selectAchievementType
+                                        "
+                                        class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                    >
+                                        {{ getFormControlValueForSearch("achievementType") }}
+                                        <!--                                         <i
+                                            class="fa fa-times"
+                                            (click)="setFormControlValueForSearch('achievementType', null)"
+                                        ></i> -->
+                                        <fa-icon
+                                            (click)="setFormControlValueForSearch('achievementType', null)"
+                                            [icon]="faTimes"
+                                        ></fa-icon>
+                                    </div>
+                                    <ng-template #selectAchievementType>
+                                        <a
+                                            class="nav-link dropdown-toggle"
+                                            href="#"
+                                            role="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            Credential Type
+                                        </a>
+                                        <ul
+                                            class="dropdown-menu"
+                                            *ngIf="
+                                                credentialsSearchResponse.achievementTypes.length > 0;
+                                                else noFilterAvailable
+                                            "
+                                        >
+                                            <li
+                                                *ngFor="
+                                                    let achievementType of credentialsSearchResponse.achievementTypes
+                                                "
+                                            >
+                                                <button
+                                                    class="dropdown-item"
+                                                    type="button"
+                                                    (click)="
+                                                        setFormControlValueForSearch('achievementType', achievementType)
+                                                    "
+                                                >
+                                                    {{ achievementType }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </ng-template>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <div
+                                        *ngIf="
+                                            !!getFormControlValueForSearch('effectiveAtYear');
+                                            else selectEffectiveAtYear
+                                        "
+                                        class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                    >
+                                        {{ getFormControlValueForSearch("effectiveAtYear") }}
+                                        <!--                                         <i
+                                            class="fa fa-times"
+                                            (click)="setFormControlValueForSearch('effectiveAtYear', null)"
+                                        ></i> -->
+
+                                        <fa-icon
+                                            (click)="setFormControlValueForSearch('effectiveAtYear', null)"
+                                            [icon]="faTimes"
+                                        ></fa-icon>
+                                    </div>
+                                    <ng-template #selectEffectiveAtYear>
+                                        <a
+                                            class="nav-link dropdown-toggle"
+                                            href="#"
+                                            role="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            Effective Date
+                                        </a>
+                                        <ul
+                                            class="dropdown-menu"
+                                            *ngIf="
+                                                credentialsSearchResponse.effectiveAtYears.length > 0;
+                                                else noFilterAvailable
+                                            "
+                                        >
+                                            <li
+                                                *ngFor="
+                                                    let effectiveAtYear of credentialsSearchResponse.effectiveAtYears
+                                                "
+                                            >
+                                                <button
+                                                    class="dropdown-item"
+                                                    type="button"
+                                                    (click)="
+                                                        setFormControlValueForSearch('effectiveAtYear', effectiveAtYear)
+                                                    "
+                                                >
+                                                    {{ effectiveAtYear }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                            <div class="input-group search-group shadow">
+                                <label class="input-group-text"> <fa-icon [icon]="faSearch"></fa-icon></label>
+                                <input
+                                    class="form-control"
+                                    id="filter-search"
+                                    formControlName="keywords"
+                                    type="search"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                />
+                            </div>
+                        </div>
+                    </nav>
+                </form>
+                <div *ngIf="searchSpinner == true; else displayResults" class="d-flex flex-column">
+                    <app-spinner id="credential-results-spinner" [message]="'Loading credentials'"></app-spinner>
+                </div>
+                <ng-template #displayResults>
+                    <div
+                        *ngIf="credentialsSearchResponse.verifiableCredentialIds.length == 0"
+                        class="card text-white bg-info mb-4"
+                    >
+                        <div class="card-body">
+                            <div class="card-text">No credentials have been added to your wallet.</div>
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="hasFiltersForSearch() && credentialsSearchResponse.verifiableCredentialIds.length == 0"
+                        class="mt-3"
+                    >
+                        <div class="alert alert-info">No credentials in your wallet match your search criteria.</div>
+                    </div>
+
+                    <div
+                        *ngIf="credentialsSearchResponse.verifiableCredentialIds.length > 0"
+                        class="row row-cols-1 row-cols-md-2 g-4"
+                    >
+                        <div
+                            *ngFor="let verifiableCredentialId of credentialsSearchResponse.verifiableCredentialIds"
+                            app-credential-card
+                            [showSelect]="true"
+                            [selected]="isCredentialSelected(verifiableCredentialId)"
+                            [verifiableCredentialId]="verifiableCredentialId"
+                            (onSelect)="handleSelectCredential($event)"
+                            class="col"
+                        ></div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="addEditForm.valid">
+    <button
+        type="submit"
+        form="addEditForm"
+        [disabled]="addOrEditSpinner"
+        class="position-fixed bottom-0 border-0 p-3 bg-limeGreen text-center w-100 btn-custom"
+    >
+        <span class="h2">{{ isEdit() ? "Save Changes" : "Create Collection" }}</span>
+        <span class="spinner-border spinner-border-sm" role="status" *ngIf="addOrEditSpinner" aria-hidden="true"></span>
+    </button>
+</div>
+<ng-template #noFilterAvailable
+    ><ul class="dropdown-menu">
+        <li class="text-center">None available</li>
+    </ul></ng-template
+>

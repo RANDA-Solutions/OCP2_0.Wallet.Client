@@ -1,0 +1,29 @@
+<div class="row mt-5">
+    <div class="col">
+        <section class="default-container p-5">
+            <span class="h2">
+                Administration <br />
+                <small class="text-muted">Administrator functions</small>
+            </span>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                id="admin"
+                                [routerLinkActive]="['active']"
+                                [routerLink]="['/admin/landing']"
+                                >Admin Home</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

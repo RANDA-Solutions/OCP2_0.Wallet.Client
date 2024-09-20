@@ -1,0 +1,93 @@
+<div class="container py-5">
+    <div class="d-flex flex-column gap-3 py-5 text-white text-left">
+        <div class="h1 col-12">Manage Collections</div>
+        <p class="col-12 col-lg-6">
+            Select frequently grouped Credentials as Collections for easier and faster sharing with employers and
+            institutions.
+        </p>
+    </div>
+</div>
+
+<div class="bg-blueLightest pb-5">
+    <div class="container">
+        <div class="d-flex flex-column gap-5 mt-0">
+            <form [formGroup]="searchForm" class="form-reset">
+                <nav class="navbar navbar-expand-lg mt-4 filter-group">
+                    <div class="container-fluid gap-4 flex-column-reverse flex-lg-row">
+                        <ul class="navbar-nav flex-column flex-lg-row me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    role="button"
+                                    (click)="setFormControlValue('sortBy', 'name')"
+                                    [ngClass]="{
+                                        'p-2 bg-blueLight rounded border': getFormControlValue('sortBy') == 'name',
+                                    }"
+                                >
+                                    A-Z
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    role="button"
+                                    (click)="setFormControlValue('sortBy', 'createdAt')"
+                                    [ngClass]="{
+                                        'p-2 bg-blueLight rounded border': getFormControlValue('sortBy') == 'createdAt',
+                                    }"
+                                >
+                                    Date Added
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    role="button"
+                                    (click)="setFormControlValue('sortBy', 'shareCount')"
+                                    [ngClass]="{
+                                        'p-2 bg-blueLight rounded border':
+                                            getFormControlValue('sortBy') == 'shareCount',
+                                    }"
+                                >
+                                    Frequently Shared
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="input-group search-group shadow">
+                            <label class="input-group-text"><fa-icon [icon]="faSearch"></fa-icon></label>
+                            <input
+                                class="form-control"
+                                id="filter-search"
+                                formControlName="keywords"
+                                type="search"
+                                placeholder="Search"
+                                aria-label="Search"
+                            />
+                        </div>
+                    </div>
+                </nav>
+            </form>
+
+            <div *ngIf="showSpinner == true; else displayResults" class="d-flex flex-column">
+                <app-spinner id="collection-results-spinner" [message]="'Loading collections'"></app-spinner>
+            </div>
+            <ng-template #displayResults>
+                <div *ngIf="!credentialCollectionIds || credentialCollectionIds.length == 0" class="alert alert-info">
+                    No collections have been created in your wallet.
+                </div>
+
+                <div
+                    *ngIf="credentialCollectionIds && credentialCollectionIds.length >= 0"
+                    class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5"
+                >
+                    <div
+                        *ngFor="let credentialCollectionId of credentialCollectionIds"
+                        app-credential-collection-card
+                        [credentialCollectionId]="credentialCollectionId"
+                        class="col"
+                    ></div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+@import "/src/styles/variables";
+
+#profile-spinner {
+    min-height: 280px;
+}
+
+.welcome-msg-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.welcome-msg {
+    font-size: 2rem;
+    color: $blueDarkest;
+}
+
+.welcome-msg-name {
+    font-size: 2rem;
+    color: $blueDarkest;
+    font-weight: bold;
+    margin-top: -12px;
+}
+
+.welcome-msg-separator {
+    display: block;
+    width: 100%;
+    height: 3px;
+    /* Set the hr color */
+    color: $limeGreen; /* old IE */
+    background-color: $limeGreen; /* Modern Browsers */
+}
+
+i {
+    color: $limeGreen;
+}
+
+#profileImageContainer {
+    background: $blueLightest;
+    padding: 16px;
+
+    i {
+        color: $blueDarkest;
+    }
+}
+
+.profile-stats {
+    text-align: center;
+    font-weight: bold;
+}
+
+.profile-stats-container {
+    height: 100%;
+}
+
+.btn-edit-profile:hover {
+    background-color: $blueDark !important;
+}
+
+.profile-img-max-height {
+    max-height: 150px;
+    max-width: 150px;
+}

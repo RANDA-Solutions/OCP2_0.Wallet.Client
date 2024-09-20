@@ -1,0 +1,93 @@
+<div class="card shadow h-100">
+    <div class="card-header align-content-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex gap-2 align-items-center fw-lighter">
+                <a (click)="sharePackage(package.credentialPackageId)" title="Share All Credential In Package">
+                    <fa-icon [icon]="faShare" size="lg"></fa-icon>
+                </a>
+                <span *ngIf="package.shareCount > 0" class="fw-light"> {{ package.shareCount }} shares </span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <section class="clr-section">
+            <div>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="badge-img-container mb-2" *ngIf="!!package.effectiveImageUrl">
+                        <img
+                            class="rounded-circle img-fluid"
+                            src="{{ package.effectiveImageUrl }}"
+                            alt="{{ package.issuerName }} badge photo"
+                        />
+                    </div>
+
+                    <div class="w-100">
+                        <div class="mb-1 text-grayBase">
+                            <div
+                                *ngIf="package.isVerified && !package.isRevoked"
+                                class="d-flex gap-1 align-items-center font-size-xs"
+                            >
+                                <fa-icon
+                                    class="text-blueDark"
+                                    [icon]="faShieldCheck"
+                                    title="The credential is unaltered and has a verified issuer signature."
+                                ></fa-icon>
+                                Verified
+                            </div>
+                            <div
+                                *ngIf="!package.isVerified && !package.isRevoked"
+                                class="d-flex gap-1 align-items-center font-size-xs"
+                                [ngClass]="{ 'd-flex': !package.isVerified && !package.isRevoked }"
+                            >
+                                <fa-icon
+                                    class="text-blueDark"
+                                    [icon]="faExclamationCircle"
+                                    title="The credential has a missing or unverified issuer signature."
+                                ></fa-icon>
+                                Not Verified
+                            </div>
+                            <div *ngIf="package.isRevoked" class="d-flex gap-1 align-items-center font-size-xs">
+                                <fa-icon
+                                    class="text-blueDark"
+                                    [icon]="faBan"
+                                    title="Contact issuer for verification."
+                                ></fa-icon>
+                                Needs Verification
+                            </div>
+                        </div>
+                        <h2 class="text-blueDarkest">{{ package.name }}</h2>
+                    </div>
+                </div>
+                <hr />
+                <div class="font-size-xs text-uppercase fw-bold text-blueBase">
+                    {{ package.issuerName }}
+                </div>
+                <div>
+                    <span class="font-size-xs text-uppercase">Effective Date: </span>
+                    <span class="font-size-xs fw-bold">{{ package.effectiveAt | date: "MMM d, yyyy" }}</span>
+                </div>
+                <div *ngIf="!!package.expiresAt">
+                    <span class="font-size-xs text-uppercase">Expiration Date: </span>
+                    <span class="font-size-xs fw-bold">{{ package.expiresAt | date: "MMM d, yyyy" }}</span>
+                </div>
+                <div class="d-flex gap-4">
+                    <div>
+                        <span class="font-size-xs text-uppercase">Achievements: </span>
+                        <span class="font-size-xs fw-bold">{{ package.achievementCount }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex gap-2 mt-1">
+            <a
+                [routerLink]="['/packages', package.credentialPackageId]"
+                role="button"
+                class="btn btn-credential-card w-100"
+            >
+                View Details
+            </a>
+        </div>
+    </div>
+</div>

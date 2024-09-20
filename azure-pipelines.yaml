@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: default
+
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 18.17.1'
+  inputs:
+    versionSpec: 18.17.1
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: custom
+    workingDir: ./
+    verbose: false
+    customCommand: 'install --no-progress'
+
+- task: Npm@1
+  displayName: 'npm build'
+  inputs:
+    command: custom
+    workingDir: ./
+    verbose: false
+    customCommand: 'run build -- --configuration production'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/dist'
+    artifact: 'client'
+    publishLocation: 'pipeline'
+  displayName: 'Publish client build as Artifact'

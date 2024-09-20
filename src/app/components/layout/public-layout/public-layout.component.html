@@ -1,0 +1,10 @@
+<div class="bg-gradient-darkblue-aqua w-100 mx-auto tw-page-wrapper d-flex flex-column">
+    <div app-public-nav></div>
+    <div class="tw-layout-container flex-column flex-fill">
+        <router-outlet></router-outlet>
+        <div class="row justify-content-center">
+            <p-toast class="tw-toast" position="bottom-center" key="main" [baseZIndex]="5000"></p-toast>
+        </div>
+    </div>
+    <div app-public-footer class="public-footer"></div>
+</div>

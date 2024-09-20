@@ -1,0 +1,17 @@
+.is-invalid {
+  border-left: solid 6px red;
+}
+
+input.form-control.custom-disabled {
+  background-color: #f0f0f0 !important; /* Lighter gray background */
+  border-color: #ced4da !important; /* Light gray border */
+  color: #6c757d !important; /* Gray text color */
+  opacity: 1 !important; /* Ensures full opacity */
+  cursor: not-allowed !important; /* Changes the cursor to indicate the field is disabled */
+}
+
+@media (max-width: 576px) {
+  .mobile-font-scale {
+    font-size: 1.25rem!important; /* Adjust as needed */
+  }
+}

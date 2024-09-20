@@ -1,0 +1,40 @@
+
+    <div class="col">
+      <div id="login-panel" class="row login-card card px-5 pb-2 pt-4">
+        <div class="col p-3">
+          <section>
+            <h2>Resend Account Confirmation Email</h2>
+            <h4>Enter your email.</h4>
+            <hr />
+            <ng-container *ngIf="!sent">
+              <form method="post" #f="ngForm" (ngSubmit)="forgot(f)">
+                <div *ngIf="modelErrors && modelErrors.length > 0">
+                  <div class="alert alert-danger mt-2">
+                    <div *ngFor="let msg of modelErrors">{{msg}}</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input name="email" class="form-control" placeholder="Email" [ngModel]="forgotPasswordForm.email"
+                    #email="ngModel" tmFocus validateEmail />
+                  <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a
+                    valid
+                    email</small>
+                </div>
+                <div class="text-end align-items-center">
+                <button type="submit" class="btn btn-login me-3" id="btn-forgot-password"
+                  [disabled]="buttonSpinner">Submit <span class="spinner-border spinner-border-sm" role="status"
+                    *ngIf="buttonSpinner" aria-hidden="true"></span></button>
+                <a id="login" class="color-darkblue" [routerLink]="['/access/login']">Cancel</a>
+              </div>
+              </form>
+            </ng-container>
+            <ng-container *ngIf="sent">
+              <p>
+                Please check your email to confirm your account.
+              </p>
+              <a id="login" [routerLink]="['/access/login']">LOGIN</a>
+            </ng-container>
+          </section>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,79 @@
+<div class="d-flex flex-column">
+    <div id="packagerHeader" class="bg-blueDark d-flex flex-column flex-lg-row gap-4 py-5">
+        <div class="container col-12 align-content-center">
+            <div *ngIf="packageSpinner == true; else headerContent" class="d-flex flex-column">
+                <app-spinner id="package-details-spinner" [message]="'Loading credentials'"></app-spinner>
+            </div>
+
+            <ng-template #headerContent>
+                <h1 class="d-flex gap-3 justify-content-center align-items-center text-center text-white">
+                    <div
+                        *ngIf="package.isVerified && !package.isRevoked"
+                        class="d-flex gap-1 align-items-center fw-light font-size-sm"
+                    >
+                        <fa-icon
+                            class="text-white"
+                            [icon]="faShieldCheck"
+                            size="lg"
+                            title="The credential is unaltered and has a verified issuer signature."
+                        ></fa-icon>
+                    </div>
+                    <div
+                        *ngIf="!package.isVerified && !package.isRevoked"
+                        class="d-flex gap-1 align-items-center fw-light font-size-sm"
+                    >
+                        <fa-icon
+                            class="text-white"
+                            [icon]="faExclamationCircle"
+                            size="lg"
+                            title="The credential has a missing or unverified issuer signature."
+                        ></fa-icon>
+                    </div>
+                    <div *ngIf="package.isRevoked" class="d-flex gap-1 align-items-center fw-light font-size-sm">
+                        <fa-icon
+                            class="text-white"
+                            [icon]="faBan"
+                            size="lg"
+                            title="Contact issuer for verification."
+                        ></fa-icon>
+                    </div>
+                    {{ package.name }}
+                </h1>
+                <div class="col-12 col-md-6 offset-md-3 d-flex justify-content-between mt-4 px-4 text-white fs-6">
+                    <div class="d-flex gap-2 align-items-center fw-light font-size-sm">
+                        <a (click)="sharePackage(package.credentialPackageId)" title="Share All Credential In Package">
+                            <fa-icon [icon]="faShare" size="lg"></fa-icon>
+                        </a>
+                        <span *ngIf="package.shareCount > 0" class="fw-light"> {{ package.shareCount }} shares </span>
+                    </div>
+
+                    <a role="button" *ngIf="package.canDelete" (click)="handleShowPackageDelete(package)">
+                        <fa-icon class="text-white" [icon]="faTrash" size="lg"></fa-icon>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 offset-md-3 text-white fs-6">
+                    <hr />
+
+                    <p class="font-size-sm overflow-wrap-anywhere">
+                        {{ package.description }}
+                    </p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="bg-blueLightest py-5 px-2 p-md-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-lg-2 g-4">
+                <div
+                    *ngFor="let verifiableCredentialId of package.verifiableCredentialIds"
+                    app-credential-card
+                    [showDelete]="true"
+                    [verifiableCredentialId]="verifiableCredentialId"
+                    (onDelete)="handleShowDeleteCredential($event)"
+                    class="col"
+                ></div>
+            </div>
+        </div>
+    </div>
+</div>

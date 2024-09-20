@@ -1,0 +1,64 @@
+<div class="bg-gradient-darkblue-aqua">
+    <div class="container py-5">
+        <div class="d-flex flex-column gap-3 py-5 text-white text-center">
+            <div class="container col-lg-6">
+                <div class="h1 mb-3">Upload Documents</div>
+                <p class="fs-6 fw-bold">Information on adding document files as Credentials</p>
+                <p class="fw-light">
+                    In your Teacher Wallet account, connect your praxis scores by entering your ETS Candidate ID (found
+                    at the top of your Praxis Test Taker Score Report or on your My Praxis home page) and selecting the
+                    appropriate information to verify your identity.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-blueLightest pb-5">
+        <div class="container">
+            <div class="d-flex flex-column gap-5 align-items-center">
+                <div [ngClass]="{ 'alert alert-danger mt-2': modelErrors.length > 0 }">
+                    <span *ngFor="let msg of modelErrors">{{ msg }}</span>
+                </div>
+                <form [formGroup]="importForm" (ngSubmit)="onSubmit()" class="form-reset w-100">
+                    <div class="container col-lg-4 p-1 mb-3">
+                        <div class="text-center fs-3 fw-bold text-blueDark mb-4">Choose a credential document</div>
+                        <input
+                            id="packageFile"
+                            type="file"
+                            (change)="onPackageFileSelected($event)"
+                            accept=".json"
+                            class="form-control"
+                            id="inputGroupFile01"
+                            [ngClass]="{ 'is-invalid': hasError('packageFile') }"
+                        />
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasError('packageFile', 'InvalidFileType')">
+                        Please choose a credential file in a supported format.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="hasError('packageFile', 'InvalidFileSize')">
+                        Please choose a credential file with file size less than 20MB.
+                    </div>
+
+                    <div class="form-group text-center mt-5">
+                        <button
+                            type="submit"
+                            [disabled]="!importForm.valid || uploadSpinner"
+                            class="btn btn-secondary btn-lg"
+                        >
+                            Upload
+                            <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                *ngIf="uploadSpinner"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                    </div>
+                </form>
+                <div class="pt-3">
+                    <a [routerLink]="['/packages']">Back to Packages</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

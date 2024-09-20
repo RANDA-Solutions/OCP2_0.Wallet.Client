@@ -1,0 +1,56 @@
+@import "/src/styles/variables";
+
+$aquaBase: #019cde;
+
+@media only screen and (max-width: 574px) {
+    /* less than 575 wide */
+    #pencil-logo {
+        height: 25%;
+        width: 25%;
+    }
+
+    .login-card {
+        border-radius: 32px;
+    }
+}
+@media only screen and (min-width: 575px) {
+    #main-row {
+        height: 100% !important;
+    }
+    #pencil-logo-div {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .login-card {
+        border-radius: 49px;
+    }
+}
+
+.login-background {
+    background: $blueLight;
+}
+.login-card {
+    color: $blueDark;
+    background-color: white;
+}
+
+.login-icon-color {
+    color: $limeGreen;
+}
+.underline-link {
+    color: white !important;
+    text-decoration: underline !important;
+    font-weight: normal;
+}
+input.form-control {
+    border: 0;
+    border-radius: 14px !important;
+    font-size: 16px;
+    color: $blueDark;
+    background-color: white !important;
+    width: 100%;
+}
+
+.color-darkblue {
+    color: $blueDark;
+}

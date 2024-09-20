@@ -1,0 +1,82 @@
+<div class="d-flex flex-column">
+    <div class="bg-gradient-darkblue-aqua">
+        <form id="addForm" [formGroup]="addForm" (ngSubmit)="handleSubmit()">
+            <div class="container py-5 mb-5">
+                <div class="d-flex flex-column flex-lg-row gap-5">
+                    <div class="container text-white w-100 text-center">
+                        <div class="h1 col-12">Share Credentials</div>
+                        <p class="container col-12 col-md-6">
+                            Showcase your hard-earned credentials with others. Simply enter a description and an email
+                            address to share your accomplishments and highlight your expertise.
+                        </p>
+                        <div class="container col-12 col-md-6 mt-5">
+                            <div class="form-group">
+                                <div class="col-12 mb-4">
+                                    <textarea
+                                        id="shareDescription"
+                                        formControlName="description"
+                                        placeholder="Description (optional)"
+                                        rows="4"
+                                        class="form-control border border-dark bg-light"
+                                        [ngClass]="{ 'is-invalid': hasError('description') }"
+                                    ></textarea>
+                                    <div
+                                        class="invalid-feedback"
+                                        *ngIf="hasError('description', 'maxLengthConditional')"
+                                    >
+                                        Please enter no more than 1000 characters.
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <input
+                                        id="email"
+                                        formControlName="email"
+                                        placeholder="Email Address"
+                                        type="text"
+                                        class="form-control border border-dark bg-light"
+                                        [ngClass]="{ 'is-invalid': hasError('email') }"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('email', 'maxLengthConditional')">
+                                        Please enter no more than 256 characters.
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="hasError('email', 'required')">
+                                        Please provide an email for your share.
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="hasError('email', 'email')">
+                                        Please enter a valid email address.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <button type="submit" [disabled]="shareSpinner" class="btn btn-primary">
+                                        Share Credentials
+                                        <span
+                                            *ngIf="shareSpinner"
+                                            class="spinner-border spinner-border-sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="bg-blueLightest pb-5">
+            <div class="container">
+                <div *ngIf="verifiableCredentialIds.length > 0" class="row row-cols-1 row-cols-md-2 g-4">
+                    <div
+                        *ngFor="let verifiableCredentialId of verifiableCredentialIds"
+                        app-credential-card
+                        [showSelect]="false"
+                        [verifiableCredentialId]="verifiableCredentialId"
+                        class="col"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div id="login-panel" class="row login-card card p-2 p-lg-5">
+    <div class="col p-3">
+        <div class="text-center h1 font-weight-bold text-uppercase mobile-font-scale">Set up Your Account</div>
+        <hr />
+
+        <div asp-validation-summary="All" [ngClass]="{ 'alert alert-danger mt-2': modelErrors.length > 0 }">
+            <div class="col-12" *ngFor="let msg of modelErrors">{{ msg }}</div>
+        </div>
+
+        <form [formGroup]="setupForm" (submit)="handleSubmit()">
+            <div class="form-group">
+                <div class="col-12 mb-4">
+                    <label for="email">Email:</label>
+                    <input
+                        id="email"
+                        disabled
+                        class="form-control border border-dark bg-light custom-disabled"
+                        [value]="email"
+                    />
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label for="displayName" [ngClass]="hasError('displayName') ? 'text-danger' : ''">Name:</label>
+                    <input
+                        id="displayName"
+                        formControlName="displayName"
+                        maxLength="100"
+                        class="form-control border border-dark bg-light"
+                    />
+                    <div
+                        *ngFor="let message of getValidationMessages(setupForm.controls['displayName'])"
+                        class="text-danger col"
+                    >
+                        {{ message }}
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label for="password" [ngClass]="hasError('password') ? 'text-danger' : ''">Password:</label>
+                    <input
+                        id="password"
+                        formControlName="password"
+                        maxLength="100"
+                        type="password"
+                        class="form-control border border-dark bg-light"
+                    />
+                    <div
+                        *ngFor="let message of getValidationMessages(setupForm.controls['password'])"
+                        class="text-danger col"
+                    >
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <app-password-requirements id="password-requirements"></app-password-requirements>
+            </div>
+
+            <div class="form-group mt-3">
+                <div class="col-12 mb-4">
+                    <label for="confirmPassword" [ngClass]="hasError('confirmPassword') ? 'text-danger' : ''"
+                        >Confirm Password:</label
+                    >
+                    <input
+                        id="confirmPassword"
+                        formControlName="confirmPassword"
+                        type="password"
+                        class="form-control border border-dark bg-light"
+                    />
+                    <div
+                        *ngFor="let message of getValidationMessages(setupForm.controls['confirmPassword'])"
+                        class="text-danger col"
+                    >
+                        {{ message }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-12 mb-4"></div>
+                    <button
+                        [disabled]="showSpinner || setupForm.invalid"
+                        type="submit"
+                        class="btn btn-secondary btn-block fw-bold"
+                    >
+                        Set up
+                        <span
+                            class="spinner-border spinner-border-sm"
+                            role="status"
+                            *ngIf="showSpinner"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

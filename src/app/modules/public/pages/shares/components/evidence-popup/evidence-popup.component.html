@@ -1,0 +1,45 @@
+<div class="modal-content p-4">
+    <button type="button" class="close-modal" (click)="close('Cancel')" data-bs-dismiss="modal" aria-label="Close">
+        <fa-icon [icon]="faTimes" size="lg"></fa-icon>
+    </button>
+
+    <div class="modal-header">
+        <div class="modal-title">Documents</div>
+    </div>
+
+    <div class="modal-body mb-2">
+        <div *ngIf="showSpinner == true; else evidenceContent" class="d-flex flex-column">
+            <app-spinner id="evidence-modal-spinner" [message]="'Loading documents'"></app-spinner>
+        </div>
+
+        <ng-template #evidenceContent>
+            <div *ngIf="!!verifiableCredentialName">
+                <div class="fw-bold text-blueDarkest">{{ verifiableCredentialName }}</div>
+                <hr />
+            </div>
+            <div class="evidences" *ngIf="evidences.length > 0; else noEvidences">
+                <div *ngFor="let evidence of evidences" class="d-flex flex-column align-items-start gap-2 mb-3">
+                    <button type="button" class="document-link" (click)="openfile(evidence)">{{ evidence.name }}</button>
+                </div>
+            </div>
+
+            <ng-template #noEvidences>
+                <div class="notification nomessages p-2 w-100 d-flex gap-2 align-items-center">
+                    <div class="notification-subject flex-fill">No evidence.</div>
+                </div>
+            </ng-template>
+        </ng-template>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            id="reviewLater"
+            class="btn btn-credential-card w-100"
+            type="button"
+            (click)="close('Cancel')"
+            aria-label="Close"
+        >
+            Close
+        </button>
+    </div>
+</div>

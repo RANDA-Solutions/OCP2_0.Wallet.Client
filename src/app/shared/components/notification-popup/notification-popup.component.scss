@@ -1,0 +1,100 @@
+@import "/src/styles/variables";
+
+@media (min-width: 768px) {
+    .close-modal {
+        position: absolute !important;
+        right: -55px !important;
+        margin-top: -55px !important;
+        background-color: white;
+        color: $blueDark;
+        border-radius: 9999px;
+        padding: 10px 14px;
+        border: 0px;
+    }
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn-credential {
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: $blueBase;
+    font-size: 0.75em;
+    background-color: $blueBase !important;
+    border-radius: 0 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    text-decoration: none;
+    text-transform: none;
+    border: none;
+    width: 100%;
+
+    &:hover {
+        background-color: $blueDark !important;
+        color: $whiteBase !important;
+    }
+
+    &:first-child {
+        border-bottom-left-radius: 15px !important;
+    }
+
+    &:last-child {
+        border-bottom-right-radius: 15px !important;
+    }
+}
+
+.issuerName {
+    color: $blueBase;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.clrSubheader {
+    color: $grayBase;
+    font-size: 0.75rem;
+}
+
+.subjectLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.subjectValue {
+    font-size: 0.75rem;
+}
+
+.achievementLabel {
+    color: $blueDarkest;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.close-modal {
+    position: fixed;
+    right: 20px;
+    background-color: white;
+    color: $blueDark;
+    border-radius: 9999px;
+    padding: 10px 14px;
+    border: 0px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap;
+    border-top: 0px;
+    padding: 0px;
+}
+
+.issuer-img-max-height {
+    max-height: 100px;
+    max-width: 100px;
+}

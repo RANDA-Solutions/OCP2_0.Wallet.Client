@@ -1,0 +1,9 @@
+@import "/src/styles/variables";
+
+input.form-control {
+    padding: 0.35rem;
+    border-radius: 16px !important;
+    font-size: 16px;
+    color: $aquaBase;
+    background-color: $whiteBase !important;
+}

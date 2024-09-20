@@ -1,0 +1,41 @@
+<div class="modal-content p-4">
+    <button type="button" class="close-modal" (click)="handleCancel()" data-bs-dismiss="modal" aria-label="Close">
+        <fa-icon [icon]="faTimes" size="lg"></fa-icon>
+    </button>
+
+    <div class="modal-header">
+        <div class="modal-title">Delete This Collection?</div>
+    </div>
+
+    <div class="modal-body mb-2">
+        <div class="fw-bold text-blueDarkest">{{ collectionToDelete.name }}</div>
+        <hr />
+        <div class="d-flex flex-column gap-3">
+            <div>Once you delete this collection, this can't be undone.</div>
+            <div>Are you sure?</div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="d-flex gap-2 w-100">
+            <button
+                id="deleteCollection"
+                class="btn btn-credential-card w-100"
+                type="button"
+                (click)="handleDelete()"
+                aria-label="Add Credential"
+            >
+                Delete Collection
+            </button>
+            <button
+                id="nevermindCollection"
+                class="btn btn-credential-card w-100"
+                type="button"
+                (click)="handleCancel()"
+                aria-label="Review Later"
+            >
+                Never mind
+            </button>
+        </div>
+    </div>
+</div>

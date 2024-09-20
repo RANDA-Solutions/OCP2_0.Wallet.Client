@@ -1,0 +1,15 @@
+{
+  "icons": [
+    {
+      "sizes": "32x32 64x64 128x128 256x256",
+      "src": "favicon.ico",
+      "type": "image/png"
+    }
+  ],
+  "name": "Open Credential Publisher Learning & Employment Wallet",
+  "short_name": "OCP LER",
+  "credential_handler": {
+    "url": "/wallet-worker.html",
+    "enabledTypes": [ "VerifiablePresentation" ]
+  }
+}

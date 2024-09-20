@@ -1,0 +1,77 @@
+<div class="modal-content p-4">
+    <button type="button" class="close-modal" (click)="close('Cancel')" data-bs-dismiss="modal" aria-label="Close">
+        <fa-icon [icon]="faTimes" size="lg"></fa-icon>
+    </button>
+
+    <div class="modal-header">
+        <div class="modal-title" id="staticBackdropLabel">{{ notificationDetail.name }}</div>
+    </div>
+
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-md-4" *ngIf="notificationDetail.issuerImage">
+                <img class="img-fluid issuer-img-max-height" [src]="notificationDetail.issuerImage" />
+            </div>
+            <div class="col-md-8" *ngIf="notificationDetail.issuerImage" class="d-flex align-items-center">
+                <span class="mt-2 fw-bold w-100 text-left"
+                    >{{ notificationDetail.issuerName }} wants to Award a Credential to you</span
+                >
+            </div>
+            <div class="col-md-12" *ngIf="!notificationDetail.issuerImage">
+                <span class="mt-2 fw-bold w-100 text-left">
+                    {{ notificationDetail.issuerName }} wants to Award a Credential to you
+                </span>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-12">
+                <span class="subjectLabel">Issuer: </span>
+                <span class="subjectValue">{{ notificationDetail.issuerName }}</span>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <span class="subjectLabel">Offer Date: </span>
+                <span class="subjectValue">{{ notificationDetail.date | date: "shortDate" }}</span>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <span class="subjectLabel">Achievements: </span>
+                <span class="subjectValue">{{ notificationDetail.achievementCount }}</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div *ngIf="!!modelErrors && modelErrors.length > 0" class="alert alert-danger mt-2">
+                    <span *ngFor="let msg of modelErrors">{{ msg }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            id="addCredential"
+            class="btn btn-credential mx-1"
+            type="button"
+            (click)="addCredential()"
+            aria-label="Add Credential"
+            [disabled]="addSpinner"
+        >
+            Add Credential
+            <span class="spinner-border spinner-border-sm" role="status" *ngIf="addSpinner" aria-hidden="true"></span>
+        </button>
+        <button
+            id="reviewLater"
+            class="btn btn-credential mx-1"
+            type="button"
+            (click)="markNotificationAsUnread()"
+            aria-label="Review Later"
+        >
+            Review Later
+        </button>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+@import "/src/styles/variables";
+
+#divCred {
+    min-height: 640px;
+}
+#topBtn {
+    background-color: transparent;
+    position: fixed;
+    bottom: 5px;
+    left: 50%;
+    z-index: 1017;
+}
+
+#packagerHeader {
+    padding: 2rem 0;
+}

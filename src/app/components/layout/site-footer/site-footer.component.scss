@@ -1,0 +1,28 @@
+@import "/src/styles/variables";
+
+.container {
+    max-width: 100% !important;
+    color: white !important;
+}
+.container a {
+    color: white !important;
+}
+.footer-logo-container,
+.footer-logo-container a {
+    max-height: 20px;
+}
+.footer-logo img {
+    margin-top: -5px;
+    object-fit: contain;
+    height: 34px !important;
+}
+
+footer {
+    margin-top: -10px;
+    background-color: transparent;
+}
+
+footer .container {
+    background-color: $blueDark;
+    border-radius: 10px 10px 0px 0px;
+}

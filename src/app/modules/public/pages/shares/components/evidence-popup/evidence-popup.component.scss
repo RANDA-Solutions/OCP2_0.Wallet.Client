@@ -1,0 +1,48 @@
+@import "/src/styles/variables";
+
+@media (min-width: 768px) {
+    .close-modal {
+        position: absolute !important;
+        right: -55px !important;
+        margin-top: -55px !important;
+        background-color: white;
+        color: $blueDark;
+        border-radius: 9999px;
+        padding: 10px 14px;
+        border: 0px;
+    }
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.close-modal {
+    position: fixed;
+    right: 20px;
+    background-color: white;
+    color: $blueDark;
+    border-radius: 9999px;
+    padding: 10px 14px;
+    border: 0px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap;
+    border-top: 0px;
+    padding: 0px;
+}
+
+.document-link {
+    color: $blueBase;
+    text-decoration: underline;
+    background: transparent !important;
+    border: 0px !important;
+    &:hover {
+        cursor: pointer;
+        color: $blueDark;
+    }
+}

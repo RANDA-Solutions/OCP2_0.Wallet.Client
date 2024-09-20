@@ -1,0 +1,188 @@
+<div id="login-panel" class="row login-card card p-5">
+    <div class="col p-3">
+        <div class="text-center h1 font-weght-bold text-uppercase">Create Your Account</div>
+        <hr />
+        <form [formGroup]="frmRegister" (submit)="submit()">
+            <div asp-validation-summary="All" [ngClass]="{ 'alert alert-danger mt-2': modelErrors.length > 0 }">
+                <span *ngFor="let msg of modelErrors">{{ msg }}</span>
+            </div>
+            <!-- <div class="input-group">
+    <input placeholder="Username" required name="username" class="form-control" ngModel/>
+  </div>
+  <div class="input-group">
+      <input placeholder="Display Name" name="displayName" class="form-control" ngModel/>
+  </div> -->
+            <div class="form-group">
+                <label for="email" [ngClass]="frmRegister.controls['email'].invalid ? 'text-danger' : ''"
+                    >Email Address</label
+                >
+                <input
+                    id="email"
+                    formControlName="email"
+                    type="email"
+                    class="form-control"
+                    [ngClass]="frmRegister.controls['email'].invalid ? 'is-invalid' : ''"
+                />
+                <label class="text-danger" *ngIf="frmRegister.controls['email'].hasError('required')">
+                    Email is Required!
+                </label>
+                <label class="text-danger" *ngIf="frmRegister.controls['email'].hasError('email')">
+                    Enter a valid email address!
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="password" [ngClass]="frmRegister.controls['password'].invalid ? 'text-danger' : ''"
+                    >Password:</label
+                >
+                <input
+                    id="password"
+                    maxLength="100"
+                    formControlName="password"
+                    type="password"
+                    class="form-control"
+                    [ngClass]="frmRegister.controls['password'].invalid ? 'is-invalid' : ''"
+                />
+                <!-- <label class="text-danger col" *ngIf="frmRegister.controls['password'].hasError('required')">
+          Password is Required!
+        </label> -->
+                <label
+                    class="col"
+                    [ngClass]="
+                        frmRegister.controls['password'].hasError('required') ||
+                        frmRegister.controls['password'].hasError('minlength')
+                            ? 'text-danger'
+                            : 'text-success'
+                    "
+                >
+                    <fa-icon
+                        *ngIf="
+                            !frmRegister.controls['password'].hasError('required') &&
+                            !frmRegister.controls['password'].hasError('minlength')
+                        "
+                        [icon]="faCheckCircle"
+                    ></fa-icon>
+                    <fa-icon
+                        *ngIf="
+                            frmRegister.controls['password'].hasError('required') ||
+                            frmRegister.controls['password'].hasError('minlength')
+                        "
+                        [icon]="faBan"
+                    ></fa-icon>
+                    Must be at least 6 characters!
+                </label>
+                <!-- <label class="col" [ngClass]="frmRegister.controls['password'].hasError('required') || frmRegister.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+          <i *ngIf="!frmRegister.controls['password'].hasError('required') && !frmRegister.controls['password'].hasError('hasNumber')" class="fas fa-check-circle"></i>
+          <i *ngIf="frmRegister.controls['password'].hasError('required') || frmRegister.controls['password'].hasError('hasNumber')" class="fas fa-ban"></i>
+          Must contain at least 1 number!
+        </label> -->
+                <label
+                    class="col"
+                    [ngClass]="
+                        frmRegister.controls['password'].hasError('required') ||
+                        frmRegister.controls['password'].hasError('hasCapitalCase')
+                            ? 'text-danger'
+                            : 'text-success'
+                    "
+                >
+                    <fa-icon
+                        *ngIf="
+                            !frmRegister.controls['password'].hasError('required') &&
+                            !frmRegister.controls['password'].hasError('hasCapitalCase')
+                        "
+                        [icon]="faCheckCircle"
+                    ></fa-icon>
+                    <fa-icon
+                        *ngIf="
+                            frmRegister.controls['password'].hasError('required') ||
+                            frmRegister.controls['password'].hasError('hasCapitalCase')
+                        "
+                        [icon]="faBan"
+                    ></fa-icon>
+                    Must contain at least 1 UPPERCASE letter!
+                </label>
+                <label
+                    class="col"
+                    [ngClass]="
+                        frmRegister.controls['password'].hasError('required') ||
+                        frmRegister.controls['password'].hasError('hasSmallCase')
+                            ? 'text-danger'
+                            : 'text-success'
+                    "
+                >
+                    <fa-icon
+                        *ngIf="
+                            !frmRegister.controls['password'].hasError('required') &&
+                            !frmRegister.controls['password'].hasError('hasSmallCase')
+                        "
+                        [icon]="faCheckCircle"
+                    ></fa-icon>
+                    <fa-icon
+                        *ngIf="
+                            frmRegister.controls['password'].hasError('required') ||
+                            frmRegister.controls['password'].hasError('hasSmallCase')
+                        "
+                        [icon]="faBan"
+                    ></fa-icon>
+                    Must contain at least 1 lowercase letter!
+                </label>
+                <label
+                    class="col"
+                    [ngClass]="
+                        frmRegister.controls['password'].hasError('required') ||
+                        frmRegister.controls['password'].hasError('hasSpecialCharacters')
+                            ? 'text-danger'
+                            : 'text-success'
+                    "
+                >
+                    <fa-icon
+                        *ngIf="
+                            !frmRegister.controls['password'].hasError('required') &&
+                            !frmRegister.controls['password'].hasError('hasSpecialCharacters')
+                        "
+                        [icon]="faCheckCircle"
+                    ></fa-icon>
+
+                    <fa-icon
+                        *ngIf="
+                            frmRegister.controls['password'].hasError('required') ||
+                            frmRegister.controls['password'].hasError('hasSpecialCharacters')
+                        "
+                        [icon]="faBan"
+                    ></fa-icon>
+                    Must contain at least 1 symbol!
+                </label>
+            </div>
+            <app-password-requirements id="password-requirements"></app-password-requirements>
+            <div class="form-group">
+                <label
+                    for="confirmPassword"
+                    [ngClass]="frmRegister.controls['confirmPassword'].invalid ? 'text-danger' : ''"
+                    >Confirm Password:</label
+                >
+                <input
+                    id="confirmPassword"
+                    formControlName="confirmPassword"
+                    type="password"
+                    class="form-control"
+                    [ngClass]="frmRegister.controls['confirmPassword'].invalid ? 'is-invalid' : ''"
+                />
+                <label class="text-danger" *ngIf="frmRegister.controls['confirmPassword'].hasError('required')">
+                    Confirm Password is Required!
+                </label>
+                <label class="text-danger" *ngIf="frmRegister.controls['confirmPassword'].hasError('NoPassswordMatch')">
+                    Passwords do not match
+                </label>
+            </div>
+            <div class="form-group">
+                <button [disabled]="frmRegister.invalid" type="submit" class="btn btn-primary btn-block fw-bold">
+                    Sign up
+                </button>
+            </div>
+            <div class="text-center">
+                <p class="mt-3 color-darkblue">
+                    <small><sup>*</sup>Please fill out all fields to register your account.</small>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

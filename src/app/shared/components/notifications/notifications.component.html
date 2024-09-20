@@ -1,0 +1,42 @@
+<div class="notifications-container">
+    <div class="title text-center">Notification Center</div>
+    <div class="notifications" *ngIf="notifications.length > 0; else noNotifications">
+        <ul class="list-group">
+            <li *ngFor="let notification of notifications" class="d-flex mb-2">
+                <div
+                    class="notification p-2 w-100 d-flex gap-2 align-items-center"
+                    [ngClass]="{ unread: !isRead(notification) }"
+                >
+                    <ng-container *ngIf="isRead(notification); else unread">
+                        <fa-icon [icon]="faEnvelopeOpen" size="lg"></fa-icon>
+                    </ng-container>
+                    <div class="notification-subject flex-fill">
+                        {{ getTitle(notification) }}
+                    </div>
+                </div>
+                <div class="notification-details p-2">
+                    <a (click)="open(notification)">
+                        Details
+                        <fa-icon [icon]="faArrowRight" size="xl"></fa-icon>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ng-template let-modal>
+    <app-notification-popup [notificationDetail]="modalNotification"></app-notification-popup>
+</ng-template>
+
+<ng-template #notification let-notification> </ng-template>
+
+<ng-template #noNotifications>
+    <div class="notification nomessages p-2 w-100 d-flex gap-2 align-items-center">
+        <div class="notification-subject flex-fill">No current notifications.</div>
+    </div>
+</ng-template>
+
+<ng-template #unread>
+    <fa-icon [icon]="faEnvelope" size="lg"></fa-icon>
+</ng-template>

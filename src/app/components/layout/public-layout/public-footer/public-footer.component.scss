@@ -1,0 +1,35 @@
+@import "../../../../../styles/variables.scss";
+
+.container {
+  max-width: 100% !important;
+}
+
+.foot-link {
+  color: white !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+.foot-link:hover, .foot-link:focus {
+  text-decoration: none;
+  color: $limeGreen !important;
+}
+
+
+.llp-link {
+  color: white !important;
+  margin-top: 2px;
+}
+.llp-link:hover, .llp-link:focus {
+  text-decoration: none;
+  color: $limeGreen !important;
+}
+
+.landing-footer {
+  margin-top: -50px;
+  background-color: transparent;
+}
+
+#footer-container {
+  background-color: $blueDark;
+  border-radius: 50px 50px 0px 0px;
+}

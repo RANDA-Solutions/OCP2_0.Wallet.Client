@@ -1,0 +1,40 @@
+@import "/src/styles/variables";
+
+.badge-img-container {
+    max-width: 60px;
+}
+
+.card-body {
+    padding: 0px !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    /* lg and up only need bottom right */
+    @media (min-width: 1024px) {
+        border-bottom-left-radius: 0px !important;
+    }
+}
+
+.rounded {
+    border-radius: 15px !important;
+}
+
+ul {
+    margin-bottom: 0px;
+    padding-left: 1rem;
+}
+
+.expired {
+    color: red;
+}
+
+.top-margin-minus-30 {
+    margin-top: -30px;
+}
+
+.padding-xxl {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}

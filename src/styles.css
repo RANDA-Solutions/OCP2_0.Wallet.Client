@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+/* Provide sufficient contrast against white background */
+
+code {
+    color: #e01a76;
+}
+
+.text-waiting-status {
+    color: #ff9e1b;
+}
+
+.text-sky-blue {
+    color: #019cde;
+}
+
+.text-navy-blue {
+    color: #084060;
+}
+
+.text-light-blue {
+    color: #c2f1f2;
+}
+
+.info-row-description {
+    font-size: 10pt;
+    font-weight: normal;
+    color: #999999;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-bottom-15 {
+    margin-bottom: 15px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.vertical-align-md {
+    margin: auto;
+    padding: 10px;
+}
+
+.row-padding {
+    /* border-bottom:1px solid #DDFCFD; */
+    padding: 15px 0;
+}
+
+.component-container {
+    position: relative;
+    top: 110px;
+    background-color: white;
+    border-radius: 10px;
+    /*box-shadow: 0 3px 6px black;*/
+    box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* This will need playing around with */
+}
+
+.grey {
+    color: #d4d4d4;
+}
+
+.margin-bottom-40 {
+    margin-bottom: 40px;
+}
+
+a {
+    color: #52e4ea;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #1aced6;
+    text-decoration: underline;
+}
+
+a:not([href]):not([class]) {
+    color: #52e4ea !important;
+    text-decoration: none !important;
+}
+
+a:not([href]):not([class]):hover {
+    color: #1aced6 !important;
+    text-decoration: underline !important;
+}
+
+iframe {
+    display: none;
+}

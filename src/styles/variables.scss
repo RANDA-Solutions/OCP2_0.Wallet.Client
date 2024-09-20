@@ -1,0 +1,42 @@
+// https://coolors.co/
+//HSL
+
+//Colors
+$aquaBase: rgb(1, 156, 222);
+$blueBase: rgb(79, 133, 181);
+$blueDark: rgb(10, 66, 113);
+$blueLight: rgb(205, 228, 249);
+$blueLightest: rgb(244, 251, 255);
+$blueDarkest: rgb(29, 53, 70);
+$grayBase: rgb(143, 143, 143);
+$grayLight: rgb(174, 182, 195);
+$redBase: rgb(219, 57, 57);
+$redDark: rgb(98, 27, 22);
+$redLight: rgb(253, 236, 234);
+$limeGreen: rgb(153, 204, 102);
+$yellowBase: rgb(245, 240, 141);
+$whiteBase: rgb(255, 255, 255);
+$blackBase: rgb(0, 0, 0);
+
+// Links
+$link-color: $limeGreen;
+$linkBlue: $aquaBase;
+$linkBlue-hover: rgba($aquaBase, 0.7); /* replace with new variable blueBase,.7 */
+
+$theme-colors: (
+    "primary": $blueDark,
+    "secondary": $limeGreen,
+    "danger": $redBase,
+    "info": $blueBase,
+    "warning": $yellowBase,
+);
+
+$colors: (
+    "white": $whiteBase,
+);
+
+$btn-font-size-lg: 14px;
+
+$font-family-typold: "Typold", sans-serif;
+$font-family-base: $font-family-typold;
+$font-weight-semibold: 600 !important;

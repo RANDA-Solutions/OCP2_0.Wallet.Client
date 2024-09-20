@@ -1,0 +1,234 @@
+@import "Variables";
+/* Importing Bootstrap SCSS file. */
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+html {
+    background-color: white;
+}
+
+body {
+    background: transparent;
+}
+
+.pg-info {
+    background-color: $limeGreen !important;
+}
+
+// nav.navbar {
+//     background-color: transparent;
+//     color: $white;
+//     max-height: 70px;
+// }
+
+.login-body section h4 {
+    color: $blueDark;
+}
+
+.btn {
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    text-transform: none;
+    border-radius: 14px !important;
+    border: none;
+}
+
+.btn {
+    &:disabled {
+        background-color: $grayBase;
+    }
+}
+
+.btn-sm {
+    white-space: nowrap;
+}
+.btn-lg {
+    border-radius: 10px;
+}
+
+.btn-primary {
+    padding: 8px 40px !important;
+    background-color: $whiteBase;
+    color: $blueDarkest;
+}
+
+.btn-primary:hover {
+    background-color: rgba($whiteBase, 0.3) !important;
+    color: $whiteBase;
+}
+
+.btn-secondary {
+    padding: 8px 40px !important;
+    border-radius: 14px;
+    border-color: $blueBase;
+    background-color: $blueBase;
+    color: $whiteBase;
+    text-transform: uppercase !important;
+}
+
+.btn-secondary:hover {
+    background-color: $blueDark !important;
+    color: $whiteBase;
+}
+
+.btn-custom:hover {
+    background-color: rgba($limeGreen, 0.7) !important;
+}
+/*
+.btn-tertiary {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 14px;
+    border-color: $aquaBase;
+    background-color: $aquaBase;
+    color: $blueDark;
+    text-transform: none !important;
+}
+
+.btn-tertiary:hover {
+    background-color: white !important;
+}
+
+.btn-outline-tertiary {
+    color: $aquaBase;
+    border-color: $aquaBase;
+    border-radius: 14px;
+}
+
+.btn-outline-tertiary:hover {
+    color: #fff;
+    background-color: $aquaBase;
+    border-color: $aquaBase;
+}
+
+.btn-outline-primary {
+    color: $blueDark !important;
+    border-color: $blueDark !important;
+}
+
+.btn-outline-primary:hover {
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    color: $limeGreen !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: $limeGreen;
+    color: white !important;
+}
+
+.btn-outline-danger,
+.btn-outline-secondary,
+.btn-outline-primary {
+    border-width: 2px !important;
+    border-radius: 14px !important;
+}
+
+.btn-outline-secondary.text-secondary {
+    color: $limeGreen !important;
+}
+
+.btn-outline-secondary.text-secondary:hover {
+    color: white !important;
+}
+
+.btn-outline-danger.text-danger:hover {
+    color: white !important;
+} */
+
+input.form-control {
+    padding: 10px 20px;
+    border-radius: 16px !important;
+    font-size: 16px;
+    color: $blackBase !important;
+    background-color: $whiteBase !important;
+}
+
+input.form-control:focus {
+    box-shadow: 0 0 $aquaBase !important;
+}
+
+#navigation {
+    background-color: $whiteBase;
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.btn-link,
+.btn-link:hover {
+    color: $linkBlue;
+}
+
+.btn-link:hover {
+    color: $linkBlue-hover;
+}
+
+.link-active .nav-link,
+.link-active .nav-link:hover,
+.link-active .nav-link:focus,
+.link-active .nav-link:active {
+    color: $aquaBase !important;
+}
+
+.text-light,
+a.text-light:focus,
+a.text-light:hover {
+    color: $whiteBase;
+}
+
+a.text-light:focus,
+a.text-light:hover {
+    font-weight: bold;
+}
+
+.card-footer:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+.equal {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+dt {
+    font-weight: 600;
+}
+th {
+    font-weight: $font-weight-semibold;
+}
+
+.spinner-grow-lg {
+    width: 4rem;
+    height: 4rem;
+}
+
+.alert {
+    padding: 0.5rem;
+    border-radius: 0px;
+    width: 100%;
+    margin: 0;
+}
+
+.alert-info {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.alert-info hr {
+    border-top-color: #a2ceff;
+}
+
+.alert-info .alert-link {
+    color: #8cc3ff;
+}
+
+.input-group-text {
+    border: 0;
+    background: none;
+}

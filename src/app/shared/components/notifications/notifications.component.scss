@@ -1,0 +1,60 @@
+@import "/src/styles/variables";
+
+.notifications-container {
+    .notifications {
+        overflow: auto;
+    }
+    .title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: $whiteBase;
+    }
+
+    .notification {
+        font-size: 0.8rem;
+        color: $whiteBase;
+        border: 2px solid $limeGreen;
+        border-radius: 10px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-right: 0px;
+        &.unread {
+            background-color: $limeGreen;
+            color: $blueDark;
+            font-weight: bold;
+        }
+        &.nomessages {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-right: 2px solid $limeGreen;
+        }
+        i {
+            color: $whiteBase;
+        }
+    }
+
+    .notification-status {
+        color: $whiteBase;
+    }
+
+    .notification-details {
+        color: $blueDark;
+        background-color: $whiteBase;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 2px solid $whiteBase;
+        font-weight: bold;
+        min-width: fit-content;
+        align-content: center;
+        &:hover {
+            background-color: $blueDark;
+            border: 2px solid $limeGreen;
+            color: $whiteBase;
+            cursor: pointer;
+        }
+        i {
+            color: $limeGreen;
+        }
+    }
+}

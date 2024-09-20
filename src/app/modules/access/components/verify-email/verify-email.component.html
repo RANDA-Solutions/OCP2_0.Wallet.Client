@@ -1,0 +1,66 @@
+<div class="p-3">
+    <div class="container col-12 text-center h1 text-white font-weight-bold no-text-wrap overflow-wrap-anywhere">
+        Verify Your Email
+    </div>
+
+    <div class="container col-12 mt-4 mb-4">
+        <div class="d-flex flex-column gap-2 text-center text-white">
+            <div>
+                An access code has been sent to <strong>{{ email }}</strong
+                >.
+            </div>
+            <div>Enter the access code below to complete account set up.</div>
+        </div>
+    </div>
+</div>
+
+<div class="container col-12">
+    <div class="d-flex flex-column gap-4">
+        <form id="submitForm" [formGroup]="submitForm" (ngSubmit)="handleSubmit()" novalidate>
+            <div class="input-group my-3">
+                <input
+                    id="code"
+                    formControlName="accessCode"
+                    type="text"
+                    required
+                    pattern="\d{6}"
+                    maxlength="6"
+                    aria-label="6 digit access code"
+                    class="form-control border border-dark bg-light input-code"
+                    [ngClass]="{ 'is-invalid': hasError('accessCode') }"
+                />
+                <div class="invalid-feedback" *ngIf="hasError('accessCode', 'custom'); else otherErrors">
+                    {{ submitForm.controls["accessCode"].errors?.custom }}
+                </div>
+                <ng-template #otherErrors>
+                    <div class="invalid-feedback" *ngIf="hasError('accessCode')">
+                        Please enter the 6-digit access code that you received via email.
+                    </div>
+                </ng-template>
+            </div>
+
+            <div class="mt-2 mb-2 text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="showSpinner || !submitForm.valid">
+                    Confirm
+                    <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        *ngIf="showSpinner"
+                        aria-hidden="true"
+                    ></span>
+                </button>
+            </div>
+            <div class="mt-5 text-center">
+                <a class="text-white text-decoration-underline" (click)="requestNewCode()"
+                    >Request New Code
+                    <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        *ngIf="sendNewCodeSpinner"
+                        aria-hidden="true"
+                    ></span
+                ></a>
+            </div>
+        </form>
+    </div>
+</div>

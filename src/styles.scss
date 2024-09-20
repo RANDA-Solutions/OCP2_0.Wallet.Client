@@ -1,0 +1,283 @@
+@import "styles/variables.scss";
+// @import "styles/primeng.Custom/tw.primeng.theme.scss";
+@import "styles/site.scss";
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body,
+.tw-page-wrapper {
+    display: block;
+    margin: 0;
+    margin-top: 0px;
+    padding-top: 0;
+}
+.tw-layout-container {
+    min-height: 100vh;
+}
+a {
+    color: $linkBlue;
+    text-decoration: none;
+
+    &:hover {
+        color: $blueDark;
+        cursor: pointer;
+    }
+}
+
+.font-size-sm {
+    font-size: 0.85rem;
+}
+
+.font-size-xs {
+    font-size: 0.75rem;
+}
+
+.cc-revoke {
+    display: none !important;
+}
+
+code {
+    color: #e01a76;
+}
+body.login-body {
+    background-color: #003b5c;
+    height: 100% !important;
+}
+.login-body section {
+    background-color: white;
+    padding: 50px 0px 50px 50px;
+    border-radius: 10px;
+    box-shadow: 1px 3px 10px 0px rgba(0, 0, 0, 0.2);
+    min-height: 357px;
+}
+
+.bg-gradient-darkblue-aqua {
+    background: linear-gradient(to right, $blueDark, $aquaBase);
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.text-grayBase {
+    color: $grayBase;
+}
+
+.text-blueBase {
+    color: $blueBase;
+}
+
+.text-blueDark {
+    color: $blueDark;
+}
+
+.text-blueDarkest {
+    color: $blueDarkest;
+}
+
+.text-limeGreen {
+    color: $limeGreen;
+}
+
+.text-tertiary {
+    color: #ff9e1b !important;
+}
+
+a.text-tertiary:hover,
+a.text-tertiary:focus {
+    color: #fa780a !important;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.bg-blueBase {
+    background-color: $blueBase;
+}
+
+.bg-blueLight {
+    background-color: $blueLight;
+}
+
+.bg-blueDark {
+    background-color: $blueDark;
+}
+
+.bg-blueDarkest {
+    background-color: $blueDarkest;
+}
+
+.bg-blueLightest {
+    background-color: $blueLightest;
+}
+
+.bg-limeGreen {
+    background-color: $limeGreen;
+}
+
+.btn-outline-tertiary {
+    border-width: 2px !important;
+    border-radius: 10px !important;
+}
+
+.btn-outline-tertiary.text-secondary {
+    color: #fff !important;
+}
+
+.tw-spinner-overlay {
+    position: absolute;
+    z-index: 5000;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+    filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -webkit-filter: blur(4px);
+}
+
+#spinner-container {
+    position: absolute;
+    z-index: 5003;
+    top: 40%;
+    left: 45%;
+}
+
+#spinner {
+    text-align: center;
+}
+
+.tw-spinner-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 5001;
+}
+.spinner-grow-lg {
+    width: 4rem;
+    height: 4rem;
+}
+
+iframe:not([src="https://authn.io/mediator"])
+{
+    display: none;
+}
+
+dialog.credential-mediator > div.web-app-window-backdrop > iframe {
+    display: block;
+}
+
+/* cookie consent styles */
+.cc-floating.cc-theme-classic {
+    background-color: $whiteBase !important;
+}
+
+.cc-btn {
+    border-radius: 14px !important;
+}
+
+/* modal styles */
+.modal-content {
+    border-radius: 1rem;
+    border: 0px;
+}
+
+.modal {
+    align-content: center;
+}
+
+.modal-header {
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 0px !important;
+}
+
+.modal-title {
+    font-size: 2rem;
+    color: $blueBase;
+    font-weight: 300;
+    text-align: center;
+    justify-content: center;
+}
+
+.modal-body {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+/* cards */
+
+.card {
+    border-radius: 18px;
+    border: 0px;
+    padding: 0px;
+
+    .card-body {
+        background-color: white;
+        padding-bottom: 0px !important;
+    }
+}
+
+.card-header {
+    background-color: $blueDark;
+    color: $whiteBase;
+    font-size: 0.8em;
+    font-weight: 500;
+    border-radius: 17px 17px 0 0 !important;
+    min-height: 35px;
+    &.card-selected {
+        background-color: $limeGreen !important;
+        color: $blueDark;
+    }
+}
+
+.card-footer {
+    background-color: white;
+    border-radius: 0 0 20px 20px !important;
+    border-top: none;
+    padding-bottom: 16px;
+}
+
+textarea.form-control {
+    border-radius: 1rem !important;
+    padding: 10px 20px;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.line-clamp-5 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.invalid-feedback {
+    color: $redDark !important;
+    background: $redLight !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+    border: 1px solid $redBase;
+}
+
+.overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+}

@@ -1,0 +1,197 @@
+<div class="container">
+    <div class="d-flex flex-column flex-lg-row gap-4 py-5">
+        <div class="container col-12 col-lg-6 mb-3">
+            <app-profile></app-profile>
+        </div>
+        <div class="col-12 col-lg-6 mb-3 mb-sm-0">
+            <app-dashboard></app-dashboard>
+        </div>
+    </div>
+</div>
+
+<div class="bg-blueLightest pb-5">
+    <div class="container">
+        <div class="d-flex flex-column gap-5 mt-0">
+            <form [formGroup]="searchForm" class="form-reset">
+                <nav class="navbar navbar-expand-lg mt-4 filter-group">
+                    <div class="container-fluid gap-4 flex-column-reverse flex-lg-row">
+                        <ul class="navbar-nav flex-column flex-lg-row me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link"
+                                    role="button"
+                                    (click)="resetFilters()"
+                                    [ngClass]="{
+                                        'p-2 bg-blueLight rounded border': !packagesSearchRequest.hasFilters(),
+                                    }"
+                                >
+                                    All
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div
+                                    *ngIf="!!packagesSearchRequest.issuerName; else selectIssuerName"
+                                    class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                >
+                                    {{ packagesSearchRequest.issuerName }}
+                                    <fa-icon
+                                        [icon]="faTimes"
+                                        (click)="setFormControlValue('issuerName', null)"
+                                    ></fa-icon>
+                                </div>
+                                <ng-template #selectIssuerName>
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Issuer
+                                    </a>
+                                    <ul
+                                        class="dropdown-menu"
+                                        *ngIf="packagesSearchResponse.issuerNames.length > 0; else noFilterAvailable"
+                                    >
+                                        <li *ngFor="let issuerName of packagesSearchResponse.issuerNames">
+                                            <button
+                                                class="dropdown-item font-size-sm"
+                                                type="button"
+                                                (click)="setFormControlValue('issuerName', issuerName)"
+                                            >
+                                                {{ issuerName }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </ng-template>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div
+                                    *ngIf="!!packagesSearchRequest.achievementType; else selectAchievementType"
+                                    class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                >
+                                    {{ packagesSearchRequest.achievementType }}
+                                    <fa-icon
+                                        [icon]="faTimes"
+                                        (click)="setFormControlValue('achievementType', null)"
+                                    ></fa-icon>
+                                </div>
+                                <ng-template #selectAchievementType>
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Credential Type
+                                    </a>
+                                    <ul
+                                        class="dropdown-menu"
+                                        *ngIf="
+                                            packagesSearchResponse.achievementTypes.length > 0;
+                                            else noFilterAvailable
+                                        "
+                                    >
+                                        <li *ngFor="let achievementType of packagesSearchResponse.achievementTypes">
+                                            <button
+                                                class="dropdown-item font-size-sm"
+                                                type="button"
+                                                (click)="setFormControlValue('achievementType', achievementType)"
+                                            >
+                                                {{ achievementType }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </ng-template>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div
+                                    *ngIf="!!packagesSearchRequest.effectiveAtYear; else selectEffectiveAtYear"
+                                    class="p-2 d-flex gap-2 align-items-center bg-blueLight rounded border filter-clear-button"
+                                >
+                                    {{ packagesSearchRequest.effectiveAtYear }}
+                                    <fa-icon
+                                        [icon]="faTimes"
+                                        (click)="setFormControlValue('effectiveAtYear', null)"
+                                    ></fa-icon>
+                                </div>
+                                <ng-template #selectEffectiveAtYear>
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Effective Date
+                                    </a>
+                                    <ul
+                                        class="dropdown-menu"
+                                        *ngIf="
+                                            packagesSearchResponse.effectiveAtYears.length > 0;
+                                            else noFilterAvailable
+                                        "
+                                    >
+                                        <li *ngFor="let effectiveAtYear of packagesSearchResponse.effectiveAtYears">
+                                            <button
+                                                class="dropdown-item font-size-sm"
+                                                type="button"
+                                                (click)="setFormControlValue('effectiveAtYear', effectiveAtYear)"
+                                            >
+                                                {{ effectiveAtYear }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div class="input-group search-group shadow">
+                            <label class="input-group-text"> <fa-icon [icon]="faSearch"></fa-icon></label>
+                            <input
+                                class="form-control"
+                                id="filter-search"
+                                formControlName="keywords"
+                                type="search"
+                                placeholder="Search"
+                                aria-label="Search"
+                            />
+                        </div>
+                    </div>
+                </nav>
+            </form>
+            <div *ngIf="showSpinner == true; else displayResults" class="d-flex flex-column">
+                <app-spinner id="package-results-spinner" [message]="'Loading packages'"></app-spinner>
+            </div>
+            <ng-template #displayResults>
+                <div
+                    *ngIf="!packagesSearchRequest.hasFilters() && packagesSearchResponse.packages.length == 0"
+                    class="alert alert-info"
+                >
+                    No credentials have been added to your wallet.
+                </div>
+
+                <div *ngIf="packagesSearchRequest.hasFilters() && packagesSearchResponse.packages.length == 0">
+                    <div class="alert alert-info">No credentials in your wallet match your search critesria.</div>
+                </div>
+
+                <div
+                    *ngIf="packagesSearchResponse.packages.length > 0"
+                    class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+                >
+                    <div
+                        *ngFor="let package of packagesSearchResponse.packages"
+                        app-package-card
+                        [package]="package"
+                        class="col"
+                    ></div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<ng-template #noFilterAvailable
+    ><ul class="dropdown-menu">
+        <li class="text-center">None available</li>
+    </ul></ng-template
+>

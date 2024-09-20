@@ -1,0 +1,320 @@
+<div *ngIf="showSpinner == true; else displayProfile" class="d-flex flex-column">
+    <app-spinner id="profile-spinner" [message]="'Loading profile'"></app-spinner>
+</div>
+<ng-template #displayProfile>
+    <section class="p-4">
+        <div class="alert alert-warning mb-4" *ngIf="!profile.isEmailConfirmed">
+            <strong
+                >Your email address has not been verified, please take a moment and click the Send Verification Email
+                button below.</strong
+            >
+        </div>
+        <div [ngClass]="{ 'alert alert-danger mt-2': modelErrors.length > 0 }">
+            <span *ngFor="let msg of modelErrors">{{ msg }}</span>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="handleSubmit()" class="form-reset">
+            <div class="row">
+                <span class="heading">Profile</span>
+                <div class="col-md-8 mb-4">
+                    <div class="d-flex flex-column gap-3">
+                        <div
+                            [ngClass]="{ editMode: isEditing['displayName'] }"
+                            class="form-group d-flex gap-2 align-items-center"
+                        >
+                            <button
+                                class="btn"
+                                type="button"
+                                (click)="toggleEdit('displayName')"
+                                title="Edit display name"
+                            >
+                                <!--                                 <i
+                                    class="fa fa-pencil fa-1x"
+                                    [ngClass]="isEditing['displayName'] ? 'text-limeGreen' : 'text-blueBase'"
+                                ></i> -->
+                                <fa-icon
+                                    [ngClass]="isEditing['displayName'] ? 'text-limeGreen' : 'text-blueBase'"
+                                    [icon]="faPencil"
+                                ></fa-icon>
+
+                                <span class="sr-only">Edit display name</span>
+                            </button>
+                            <ng-container *ngIf="!isEditing['displayName']; else editDisplayName">
+                                <label>{{ profile.displayName }}</label>
+                            </ng-container>
+                            <ng-template #editDisplayName>
+                                <div>
+                                    <input
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': hasError('displayName') }"
+                                        formControlName="displayName"
+                                        type="text"
+                                        id="displayName"
+                                        aria-label="Display Name"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('displayName')">
+                                        Please enter no more than 255 characters.
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+
+                        <div
+                            [ngClass]="{ editMode: isEditing['phoneNumber'] }"
+                            class="form-group d-flex gap-2 align-items-center"
+                        >
+                            <button
+                                class="btn"
+                                type="button"
+                                (click)="toggleEdit('phoneNumber')"
+                                title="Edit phone number"
+                            >
+                                <fa-icon
+                                    [ngClass]="isEditing['phoneNumber'] ? 'text-limeGreen' : 'text-blueBase'"
+                                    [icon]="faPencil"
+                                    size="lg"
+                                ></fa-icon>
+                                <span class="sr-only">Edit phone number</span>
+                            </button>
+                            <ng-container *ngIf="!isEditing['phoneNumber']; else editPhoneNumber">
+                                <div *ngIf="profile.phoneNumber; else placeholder">
+                                    <label>{{ profile.phoneNumber | phoneNumber }}</label>
+                                </div>
+                                <ng-template #placeholder>
+                                    <label>(xxx) xxx-xxxx</label>
+                                </ng-template>
+                            </ng-container>
+                            <ng-template #editPhoneNumber>
+                                <div>
+                                    <input
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': hasError('phoneNumber') }"
+                                        formControlName="phoneNumber"
+                                        type="text"
+                                        id="phoneNumber"
+                                        aria-label="Phone Number"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('phoneNumber')">
+                                        Please provide a 10-digit phone number.
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <span class="heading">Email</span>
+                <div class="col-md-8 mb-4">
+                    <div
+                        [ngClass]="{ editMode: isEditing['email'] }"
+                        class="form-group d-flex gap-2 align-items-center"
+                    >
+                        <button class="btn" type="button" (click)="toggleEdit('email')" title="Edit email">
+                            <fa-icon
+                                [ngClass]="isEditing['email'] ? 'text-limeGreen' : 'text-blueBase'"
+                                [icon]="faPencil"
+                                size="lg"
+                            ></fa-icon>
+                            <span class="sr-only">Edit email</span>
+                        </button>
+                        <ng-container *ngIf="!isEditing['email']; else editEmail">
+                            <label>{{ profile.email }}</label>
+                            <span *ngIf="profile.isEmailConfirmed" class="text-success fw-bold" title="Verified"
+                                >✓</span
+                            >
+                            <span *ngIf="!profile.isEmailConfirmed" class="text-danger fw-bold" title="Unverified"
+                                >&times;</span
+                            >
+                            <button
+                                id="email-verification"
+                                *ngIf="!profile.isEmailConfirmed"
+                                type="button"
+                                (click)="sendVerificationEmail()"
+                                class="btn btn-secondary btn-lg"
+                            >
+                                Send verification
+                            </button>
+                        </ng-container>
+                        <ng-template #editEmail>
+                            <ng-container *ngIf="!profile.enableEditEmail; else enableEditEmail">
+                                <span>Email cannot be changed at this time.</span>
+                            </ng-container>
+                            <ng-template #enableEditEmail>
+                                <div>
+                                    <input
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': hasError('email') }"
+                                        formControlName="email"
+                                        type="text"
+                                        id="email"
+                                        aria-label="Email"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('email')">
+                                        Please enter a valid email.
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </div>
+                </div>
+                <span class="heading">Password</span>
+                <div class="col-md-8 mb-4">
+                    <div
+                        [ngClass]="{ editMode: isEditing['currentPassword'] }"
+                        class="form-group d-flex gap-2 align-items-center"
+                    >
+                        <button
+                            class="btn align-self-start"
+                            type="button"
+                            (click)="toggleEdit(['currentPassword', 'newPassword', 'confirmPassword'])"
+                            title="Edit password"
+                        >
+                            <!--                             <i
+                                class="fa fa-pencil fa-1x"
+                                [ngClass]="isEditing['currentPassword'] ? 'text-limeGreen' : 'text-blueBase'"
+                            ></i> -->
+                            <fa-icon
+                                [ngClass]="isEditing['currentPassword'] ? 'text-limeGreen' : 'text-blueBase'"
+                                [icon]="faPencil"
+                                size="lg"
+                            ></fa-icon>
+                            <span class="sr-only">Edit password</span>
+                        </button>
+                        <ng-container *ngIf="!isEditing['currentPassword']; else editPassword">
+                            <label>********</label>
+                        </ng-container>
+                        <ng-template #editPassword>
+                            <div class="d-flex flex-column gap-2">
+                                <app-password-requirements></app-password-requirements>
+                                <div>
+                                    <label for="currentPassword">Current password</label>
+                                    <input
+                                        class="form-control"
+                                        formControlName="currentPassword"
+                                        type="password"
+                                        id="currentPassword"
+                                        [ngClass]="{ 'is-invalid': hasError('currentPassword') }"
+                                        aria-label="Current password"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('currentPassword')">
+                                        Please enter your current password.
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="newPassword">New password</label>
+                                    <input
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': hasError('newPassword') }"
+                                        formControlName="newPassword"
+                                        type="password"
+                                        id="newPassword"
+                                        aria-label="New password"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('newPassword')">
+                                        Password does not meet password requirements.
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="confirmPassword">Confirm password</label>
+                                    <input
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': hasError('confirmPassword') }"
+                                        formControlName="confirmPassword"
+                                        type="password"
+                                        id="confirmPassword"
+                                        aria-label="Confirm password"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="hasError('confirmPassword')">
+                                        New and current passwords do not match.
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <span class="heading">Image</span>
+                <div class="col-md-8 mb-4">
+                    <div
+                        [ngClass]="{ editMode: isEditing['profileImageUrl'] }"
+                        class="form-group d-flex gap-2 align-items-center"
+                    >
+                        <button
+                            class="btn align-self-start"
+                            type="button"
+                            (click)="toggleEdit('profileImageUrl')"
+                            title="Edit profile image"
+                        >
+                            <!--                             <i
+                                class="fa fa-pencil fa-1x"
+                                [ngClass]="isEditing['profileImageUrl'] ? 'text-limeGreen' : 'text-blueBase'"
+                            ></i> -->
+                            <fa-icon
+                                [ngClass]="isEditing['profileImageUrl'] ? 'text-limeGreen' : 'text-blueBase'"
+                                [icon]="faPencil"
+                                size="lg"
+                            ></fa-icon>
+                            <span class="sr-only">Edit profile image</span>
+                        </button>
+                    </div>
+                    <ng-container *ngIf="!isEditing['profileImageUrl']; else editProfileImage">
+                        <img
+                            *ngIf="profile.hasProfileImage"
+                            class="rounded max-width-125"
+                            [src]="profile.profileImageUrl"
+                            alt="Profile Picture"
+                        />
+                        <div *ngIf="!profile.hasProfileImage" id="profileImageContainer">
+                            <fa-icon
+                                [icon]="faCircleUser"
+                                class="mb-3 text-blueDarkest"
+                                size="10x"
+                                aria-details="Default Profile Picture"
+                            ></fa-icon>
+                        </div>
+                    </ng-container>
+                    <ng-template #editProfileImage>
+                        <div class="alert alert-info my-3">
+                            <h2 class="alert-header">Image Guidelines</h2>
+                            <ul>
+                                <li>Supported image formats are JPEG, PNG, GIF, Bitmap, and TIFF</li>
+                                <li>Images must be less than 20 MB</li>
+                                <li>Square images are best</li>
+                            </ul>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input
+                                    id="profileImageFile"
+                                    type="file"
+                                    #imageInput
+                                    (change)="onProfileImageFileSelected($event)"
+                                    accept=".jpg, .jpeg, .png, .gif, .bmp, .bm, .tiff"
+                                    class="custom-file-input"
+                                    [ngClass]="{ 'is-invalid': hasError('profileImageFile') }"
+                                />
+                                <div class="invalid-feedback" *ngIf="hasError('profileImageFile', 'InvalidFileType')">
+                                    Please choose an image in a supported format.
+                                </div>
+                                <div class="invalid-feedback" *ngIf="hasError('profileImageFile', 'InvalidFileSize')">
+                                    Please choose an image with file size less than 20MB.
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <button
+                            id="update-profile-button"
+                            type="submit"
+                            [disabled]="!editForm.valid"
+                            class="btn btn-secondary btn-lg"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</ng-template>

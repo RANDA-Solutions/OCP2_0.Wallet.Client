@@ -1,0 +1,56 @@
+<div *ngIf="showSpinner == true; else displayShare" class="d-flex justify-content-center align-items-center vh-100">
+    <app-spinner id="share-details-spinner" [message]="'Loading credentials'"></app-spinner>
+</div>
+
+<ng-template #displayShare>
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-column flex-lg-row gap-4 padding-xxl">
+            <div class="container col-12 align-content-center">
+                <div *ngIf="modelErrors && modelErrors.length > 0">
+                    <div class="alert alert-danger my-2">
+                        <div *ngFor="let msg of modelErrors">{{ msg }}</div>
+                    </div>
+                </div>
+                <div *ngIf="modelErrors.length == 0">
+                    <h1 class="text-center text-white overflow-wrap-anywhere">
+                        {{ publicShareDetailResponse.displayName }} has shared credentials with you!
+                    </h1>
+                </div>
+
+                <div
+                    *ngIf="
+                        (!publicShareDetailResponse.verifiableCredentialIds ||
+                            publicShareDetailResponse.verifiableCredentialIds.length == 0) &&
+                        modelErrors.length == 0
+                    "
+                    class="mt-5 alert alert-warning"
+                >
+                    This share no longer contains any credentials.
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="tw-layout-container"
+            [ngClass]="{ 'bg-blueLightest': publicShareDetailResponse.verifiableCredentialIds.length > 0 }"
+            *ngIf="
+                publicShareDetailResponse.verifiableCredentialIds &&
+                publicShareDetailResponse.verifiableCredentialIds.length > 0
+            "
+        >
+            <div class="container py-5">
+                <div class="d-flex gap-4 flex-wrap justify-content-center" *ngIf="modelErrors.length == 0">
+                    <div
+                        *ngFor="let verifiableCredentialId of publicShareDetailResponse.verifiableCredentialIds"
+                        public-credential-card
+                        [verifiableCredentialId]="verifiableCredentialId"
+                        [shareId]="publicShareDetailResponse.shareId"
+                        [hash]="publicShareDetailResponse.hash"
+                        [code]="publicShareDetailResponse.code"
+                        class="col-12 col-md-5"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

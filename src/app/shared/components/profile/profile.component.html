@@ -1,0 +1,81 @@
+<div
+    class="d-flex flex-column flex-md-row align-items-center gap-5 p-4 bg-white rounded text-nowrap overflow-hidden text-truncate"
+>
+    <div
+        *ngIf="showSpinner == true; else displayProfile"
+        class="d-flex flex-column justify-content-center align-items-center w-100 h-100"
+    >
+        <app-spinner id="profile-spinner" [message]="'loading your profile'"></app-spinner>
+    </div>
+    <ng-template #displayProfile>
+        <div class="d-flex flex-column gap-0">
+            <ng-container *ngIf="profile.hasProfileImage == true">
+                <img
+                    class="img-fluid profile-img-max-height"
+                    [ngClass]="showEditProfile ? 'rounded-top' : 'rounded'"
+                    *ngIf="profile.hasProfileImage == true"
+                    [src]="profile.profileImageUrl"
+                    alt="Profile Picture"
+                />
+            </ng-container>
+            <ng-container *ngIf="!profile.hasProfileImage">
+                <div id="profileImageContainer">
+                    <fa-icon
+                        [icon]="faCircleUser"
+                        class="mb-3 text-blueDarkest"
+                        size="10x"
+                        aria-details="Default Profile Picture"
+                    ></fa-icon>
+                </div>
+            </ng-container>
+
+            <a
+                *ngIf="showEditProfile === true"
+                class="btn-edit-profile bg-blueBase p-2 text-center text-white rounded-bottom text-decoration-none"
+                [routerLink]="['/account/manage/profile']"
+            >
+                <fa-icon [icon]="faPencil" class="mb-3 text-white"></fa-icon> Edit Profile
+            </a>
+        </div>
+        <div class="text-nowrap overflow-hidden text-truncate w-100">
+            <div class="d-flex flex-column">
+                <div *ngIf="profile.missingDisplayName == true" class="h4 text-center">
+                    <a [routerLink]="['/account/manage/profile']">Set Display Name</a>
+                </div>
+                <div class="welcome-msg-container">
+                    <div *ngIf="profile.missingDisplayName == false" class="d-flex flex-column gap-1">
+                        <span class="welcome-msg">Welcome,</span>
+                        <span class="welcome-msg-name text-nowrap overflow-hidden text-truncate">{{
+                            profile.displayName
+                        }}</span>
+                    </div>
+
+                    <div>
+                        <span class="welcome-msg-separator"></span>
+                    </div>
+                    <div class="fw-bold text-blueDarkest text-nowrap overflow-hidden text-truncate">
+                        {{ profile.email }}
+                    </div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <div class="d-flex gap-2 align-items-center">
+                            <fa-icon class="text-limeGreen" [icon]="faTrophy" size="lg"></fa-icon>
+                            <div class="font-size-sm text-center">Achievements:</div>
+                            <div class="profile-stats">{{ profile.achievements }}</div>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <fa-icon class="text-limeGreen" [icon]="faFolderOpen" size="lg"></fa-icon>
+                            <div class="font-size-sm text-center">Credentials:</div>
+                            <div class="profile-stats">{{ profile.credentials }}</div>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <fa-icon class="text-limeGreen" [icon]="faGraduationCap" size="lg"></fa-icon>
+                            <div class="font-size-sm text-center">Scores:</div>
+                            <div class="profile-stats">{{ profile.scores }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

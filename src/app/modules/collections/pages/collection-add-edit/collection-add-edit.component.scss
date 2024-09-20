@@ -1,0 +1,76 @@
+@import "/src/styles/variables";
+
+input[type="checkbox"]:checked ~ .card {
+    border: 1px solid $limeGreen;
+}
+
+.filter-group {
+    .nav-link,
+    button {
+        color: $blueDark;
+        --bs-nav-link-color: $blueDark;
+        font-weight: bold;
+        &:hover {
+            color: $limeGreen;
+        }
+        &:active {
+            background-color: $blueLight;
+            color: $blueDark;
+        }
+    }
+}
+
+.filter-clear-button {
+    color: $blueDark;
+    font-weight: bold;
+    i {
+        cursor: pointer;
+    }
+}
+
+.search-group {
+    &.input-group {
+        background-color: #fff;
+        border-radius: 10px;
+        width: 100%;
+        @media (min-width: 992px) {
+            width: 40%;
+        }
+    }
+
+    input#filter-search {
+        border: 0;
+        border-bottom: none !important;
+        background-color: transparent !important;
+    }
+}
+
+.navbar-nav {
+    gap: 10px;
+}
+
+input[type="checkbox"]:checked {
+    border: 1px solid $limeGreen;
+}
+
+a[aria-expanded="true"] {
+    background-color: $blueLight;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    &:hover {
+        color: $blueDark !important;
+    }
+}
+
+#collectionList {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: $whiteBase;
+    padding: 1rem;
+    border-radius: 1rem;
+    height: 100%;
+    margin-bottom: 1rem;
+}
+
+#ListItemRemove:hover {
+    color: rgba($blueBase, 1);
+}

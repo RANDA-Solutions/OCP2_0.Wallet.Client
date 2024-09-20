@@ -1,0 +1,19 @@
+<div class="row flex-fill justify-content-center p-5 public-page">
+    <div class="d-flex flex-column justify-content-around">
+        <div class="row justify-content-center m-5">
+            <div class="col-12 col-md-4 justify-content-center">
+                <div class="h1 text-center text-danger">Access Denied</div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-4 text-right">
+                <div class="h1 text-center text-danger">
+                    We're sorry. You are not authorized to view the requested page.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <button type="button" class="btn btn-primary" (click)="goback()">Back{{ appService.previousUrl }}</button>
+        </div>
+    </div>
+</div>

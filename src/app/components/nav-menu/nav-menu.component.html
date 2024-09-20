@@ -1,0 +1,180 @@
+<header id="navigation" *ngIf="showNavMenu">
+    <nav
+        id="theTop"
+        class="container navbar navbar-expand-md navbar-toggleable-md navbar-light box-shadow pb-0 align-items-end"
+    >
+        <a class="navbar-brand" [routerLink]="['/']">
+            <img src="/assets/images/logo.png" alt="{{ environment.siteShortName }}" class="logo-image" />
+        </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            [attr.aria-expanded]="isExpanded"
+            (click)="toggle()"
+        >
+            <fa-icon [ngClass]="{ 'd-none': isExpanded, 'd-block': !isExpanded }" [icon]="faBars" size="lg"></fa-icon>
+            <fa-icon [ngClass]="{ 'd-block': isExpanded, 'd-none': !isExpanded }" [icon]="faTimes" size="lg"></fa-icon>
+        </button>
+        <div id="desktopNav" class="navbar-collapse collapse d-sm-inline-flex d-none">
+            <ul class="navbar-actions navbar-nav me-auto flex-fill justify-content-end">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link p-3" [routerLink]="['/packages']"><span class="h2">Dashboard </span></a>
+                </li>
+
+                <li *ngIf="showAddCredential" class="nav-item text-nowrap" [routerLinkActive]="['link-active']">
+                    <a class="nav-link p-3" [routerLink]="['/packages/import']"
+                        ><span class="h2">Add <fa-icon [icon]="faChevronDown"></fa-icon></span
+                    ></a>
+                </li>
+
+                <li class="nav-item text-nowrap">
+                    <a
+                        class="nav-link p-3"
+                        [routerLinkActive]="['link-active']"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><span class="h2">Collections <fa-icon [icon]="faChevronDown"></fa-icon></span
+                    ></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button" [routerLink]="['/collections/add']">
+                                Create New Collection
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button" [routerLink]="['/collections']">
+                                Manage Collections
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item text-nowrap">
+                    <a
+                        class="nav-link p-3"
+                        [routerLinkActive]="['link-active']"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><span class="h2">Share <fa-icon [icon]="faChevronDown"></fa-icon></span
+                    ></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button" [routerLink]="['/shares/select-credentials']">
+                                Select Credentials
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button" [routerLink]="['/shares/select-collections']">
+                                Select Collections
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button" [routerLink]="['/shares/history']">
+                                Share History
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    *ngIf="checkRole('System.Administrator')"
+                    class="nav-item text-nowrap"
+                    [routerLinkActive]="['link-active']"
+                >
+                    <a class="nav-link p-3" [routerLink]="['/admin/landing']"
+                        ><span class="fal fa-tools fa-2x me-2 align-middle"></span><span class="h2"> Admin</span></a
+                    >
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item ms-3">
+                    <a id="logout" class="nav-link" (click)="logout()" title="Logout">Log Out</a>
+                </li>
+            </ul>
+        </div>
+
+        <div
+            class="navbar-collapse collapse d-sm-inline-flex"
+            [ngClass]="{ show: isExpanded }"
+            id="navbarSupportedContent"
+        >
+            <ul class="navbar-actions navbar-nav me-auto flex-fill justify-content-end">
+                <li class="nav-item text-nowrap mb-2" [routerLinkActive]="['link-active']">
+                    <a class="nav-link px-3 pb-0 fs-3" [routerLink]="['/packages']" (click)="collapse()" role="button"
+                        >Dashboard</a
+                    >
+                </li>
+
+                <li *ngIf="showAddCredential" class="nav-item text-nowrap mb-2" [routerLinkActive]="['link-active']">
+                    <a class="nav-link px-3 pb-0 fs-3" [routerLinkActive]="['link-active']" role="button">Add</a>
+                    <ul class="list-unstyled px-3">
+                        <li>
+                            <a [routerLink]="['/packages/import']" (click)="collapse()"> Upload Documents </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item text-nowrap mb-2">
+                    <a class="nav-link px-3 pb-0 fs-3" [routerLinkActive]="['link-active']" role="button"
+                        >Collections</a
+                    >
+                    <ul class="list-unstyled px-3">
+                        <li>
+                            <a [routerLink]="['/collections/add']" (click)="collapse()"> Create New Collection </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/collections']" (click)="collapse()"> Manage Collections </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item text-nowrap mb-2">
+                    <a class="nav-link px-3 pb-0 fs-3" [routerLinkActive]="['link-active']" role="button">Share</a>
+
+                    <ul class="list-unstyled px-3">
+                        <li>
+                            <a [routerLink]="['/shares/select-credentials']" (click)="collapse()">
+                                Select Credentials
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/shares/select-collections']" (click)="collapse()">
+                                Select Collections
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/shares/history']" (click)="collapse()"> Share History </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    *ngIf="checkRole('System.Administrator')"
+                    class="nav-item text-nowrap mb-2"
+                    [routerLinkActive]="['link-active']"
+                >
+                    <a class="nav-link p-3" [routerLink]="['/admin/landing']" (click)="collapse()"
+                        ><span class="fal fa-tools fa-2x me-2 align-middle"></span><span class="h2"> Admin</span></a
+                    >
+                </li>
+
+                <li class="nav-item text-nowrap">
+                    <a
+                        class="nav-link px-3 pb-0 fs-3"
+                        id="logout"
+                        [routerLinkActive]="['link-active']"
+                        (click)="logout()"
+                        role="button"
+                        title="Logout"
+                        >Log Out</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

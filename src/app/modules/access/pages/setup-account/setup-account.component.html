@@ -1,0 +1,40 @@
+<div *ngIf="showSpinner == true; else displayResults" class="d-flex flex-column">
+    <app-spinner id="setup-account-spinner" [message]="'Getting things ready...'"></app-spinner>
+</div>
+<ng-template #displayResults>
+    <div class="container">
+        <div class="col-12">
+            <div class="my-5 px-0 px-xl-5 pt-4">
+                <div *ngIf="!!errorMessage; else displayStatus">
+                    <div class="alert alert-danger my-2">
+                        {{ errorMessage }}
+                    </div>
+                </div>
+                <ng-template #displayStatus>
+                    <div [ngSwitch]="status">
+                        <div
+                            *ngSwitchCase="AccountSetupStatusEnum.VerifyEmailNeeded"
+                            app-verify-email
+                            [email]="email"
+                            (onStatusChange)="handleStatusChange($event)"
+                        ></div>
+                        <div
+                            *ngSwitchCase="AccountSetupStatusEnum.AccountSetupNeeded"
+                            app-update-account
+                            [email]="email"
+                            [accessCode]="accessCode"
+                            (onStatusChange)="handleStatusChange($event)"
+                        ></div>
+                        <div
+                            *ngSwitchCase="AccountSetupStatusEnum.AccessCodeExpired"
+                            app-code-expired
+                            [email]="email"
+                            (onStatusChange)="handleStatusChange($event)"
+                        ></div>
+                        <div *ngSwitchDefault app-no-account [email]="email"></div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</ng-template>

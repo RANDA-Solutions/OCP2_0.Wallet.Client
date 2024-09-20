@@ -1,0 +1,33 @@
+<div
+    id="login-layout-wrapper"
+    [ngClass]="bgClass"
+    class="w-100 mx-auto tw-page-wrapper d-flex flex-column login-background"
+>
+    <div id="navigation" class="d-flex flex-row">
+        <nav id="theTop" class="container col navbar navbar-expand-lg justify-content-center navbar-light">
+            <a class="navbar-brand" [routerLink]="['/']">
+                <img src="/assets/images/logo.png" alt="{{ environment.siteShortName }}" class="logo-image" />
+            </a>
+        </nav>
+    </div>
+
+    <div class="tw-layout-container flex-column flex-fill container">
+        <router-outlet></router-outlet>
+        <div class="row justify-content-center">
+            <p-toast class="tw-toast" position="bottom-center" key="main" [baseZIndex]="5000"></p-toast>
+        </div>
+    </div>
+
+    <div
+        id="theBottom"
+        class="d-flex flex-column gap-3 flex-md-row md-gap-0 align-items-center justify-content-between bg-white px-md-5 py-3"
+    >
+        <div class="d-flex gap-2 align-items-center">
+            <img src="/assets/images/kystats_logo.png" alt="Level Data Logo" class="footer-logo-image" />
+            <span class="font-size-sm">Powered by PCG and Level Data</span>
+        </div>
+        <div>
+            <span class="copyright">&copy;{{ currentYear }} Learning & Employment Wallet</span>
+        </div>
+    </div>
+</div>
