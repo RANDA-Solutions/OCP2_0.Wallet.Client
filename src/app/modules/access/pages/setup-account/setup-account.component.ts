@@ -81,8 +81,7 @@ export class SetupAccountComponent implements OnInit {
             this.router.navigate(["/access/login"], {
                 queryParams: { email: this.email },
                 state: {
-                    infoMessage:
-                        "Congratulations! Your account is ready to go. Please login below to view your profile.",
+                    infoMessage: "Please login to your wallet.",
                 },
             });
         }
