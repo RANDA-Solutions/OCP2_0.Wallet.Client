@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { AbstractControlOptions, FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { SetupService } from "@modules/access/services/setup.service";
 import { AccountSetupStatusChangedEvent } from "@shared/interfaces/accountSetupStatusChanged";
-import { ApiOkResult } from "@shared/models/apiOkResponse";
-import { VerifyEmailResponseModel } from "@shared/models/verifyEmailResponseModel";
-import { ChangeDetectorRef } from "@angular/core";
-import { VerifyAccessCodeRequestModel } from "@shared/models/verifyAccessCodeRequestModel";
 import { ApiBadRequestResponse } from "@shared/models/apiBadRequestResponse";
+import { ApiOkResult } from "@shared/models/apiOkResponse";
+import { VerifyAccessCodeRequestModel } from "@shared/models/verifyAccessCodeRequestModel";
+import { VerifyEmailResponseModel } from "@shared/models/verifyEmailResponseModel";
 import { MessageService } from "primeng/api";
-import { Router } from "@angular/router";
 
 @Component({
     selector: "[app-verify-email]",
@@ -86,7 +85,7 @@ export class VerifyEmailComponent implements OnInit {
         if (this.debug) console.log("SetupAccountComponent.requestNewCode");
 
         this.sendNewCodeSpinner = true;
-        this.setupService.getAccountStatus(this.email).subscribe(data => {
+        this.setupService.requestAccountVerification(this.email).subscribe(data => {
             if (this.debug) console.log("SetupAccountComponent.requestNewCode data", data);
 
             if (data.statusCode == 200) {

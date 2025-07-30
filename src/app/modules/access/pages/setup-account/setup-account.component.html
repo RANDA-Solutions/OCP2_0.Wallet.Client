@@ -1,40 +1,48 @@
-<div *ngIf="showSpinner == true; else displayResults" class="d-flex flex-column">
-    <app-spinner id="setup-account-spinner" [message]="'Getting things ready...'"></app-spinner>
-</div>
-<ng-template #displayResults>
-    <div class="container">
-        <div class="col-12">
-            <div class="my-5 px-0 px-xl-5 pt-4">
-                <div *ngIf="!!errorMessage; else displayStatus">
-                    <div class="alert alert-danger my-2">
-                        {{ errorMessage }}
+<div [ngSwitch]="viewState">
+    <div *ngSwitchCase="'loading'" class="d-flex flex-column">
+        <app-spinner id="setup-account-spinner" [message]="'Getting things ready...'"></app-spinner>
+    </div>
+
+    <div *ngSwitchCase="'results'" class="container">
+        <div class="container">
+            <div class="col-12">
+                <div class="my-5 px-0 px-xl-5 pt-4">
+                    <div *ngIf="!!errorMessage; else displayStatus">
+                        <div class="alert alert-danger my-2">
+                            {{ errorMessage }}
+                        </div>
                     </div>
+                    <ng-template #displayStatus>
+                        <div [ngSwitch]="status">
+                            <div *ngSwitchCase="AccountSetupStatusEnum.VerifyEmailRequestNeeded">
+                                <button type="button" class="btn btn-secondary my-3" aria-label="Email me access code" (click)="requestVerification()">
+                                    Email me my access code
+                                </button>
+                            </div>            
+                            <div
+                                *ngSwitchCase="AccountSetupStatusEnum.VerifyEmailNeeded"
+                                app-verify-email
+                                [email]="email"
+                                (onStatusChange)="handleStatusChange($event)"
+                            ></div>
+                            <div
+                                *ngSwitchCase="AccountSetupStatusEnum.AccountSetupNeeded"
+                                app-update-account
+                                [email]="email"
+                                [accessCode]="accessCode"
+                                (onStatusChange)="handleStatusChange($event)"
+                            ></div>
+                            <div
+                                *ngSwitchCase="AccountSetupStatusEnum.AccessCodeExpired"
+                                app-code-expired
+                                [email]="email"
+                                (onStatusChange)="handleStatusChange($event)"
+                            ></div>
+                            <div *ngSwitchDefault app-no-account [email]="email"></div>
+                        </div>
+                    </ng-template>
                 </div>
-                <ng-template #displayStatus>
-                    <div [ngSwitch]="status">
-                        <div
-                            *ngSwitchCase="AccountSetupStatusEnum.VerifyEmailNeeded"
-                            app-verify-email
-                            [email]="email"
-                            (onStatusChange)="handleStatusChange($event)"
-                        ></div>
-                        <div
-                            *ngSwitchCase="AccountSetupStatusEnum.AccountSetupNeeded"
-                            app-update-account
-                            [email]="email"
-                            [accessCode]="accessCode"
-                            (onStatusChange)="handleStatusChange($event)"
-                        ></div>
-                        <div
-                            *ngSwitchCase="AccountSetupStatusEnum.AccessCodeExpired"
-                            app-code-expired
-                            [email]="email"
-                            (onStatusChange)="handleStatusChange($event)"
-                        ></div>
-                        <div *ngSwitchDefault app-no-account [email]="email"></div>
-                    </div>
-                </ng-template>
             </div>
         </div>
     </div>
-</ng-template>
+</div>

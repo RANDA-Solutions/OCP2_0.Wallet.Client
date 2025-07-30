@@ -7,3 +7,6 @@ export class CredentialCardAlignmentResponseModel {
         this.targetUrl = null;
     }
 }
+
+
+

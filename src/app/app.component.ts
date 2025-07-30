@@ -8,9 +8,9 @@ import { AccessService } from "@modules/access/services/access.service";
 import { Idle } from "@ng-idle/core";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { NgcCookieConsentConfig, NgcCookieConsentService } from "ngx-cookieconsent";
-import posthog from "posthog-js";
-import { Subscription } from "rxjs";
 import { protectedRoutes } from "./app.router";
+import { Subscription } from "rxjs";
+import posthog from "posthog-js";
 
 export const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -59,7 +59,7 @@ export const cookieConfig: NgcCookieConsentConfig = {
     styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit, OnDestroy {
-    title = "Open Credential Publisher Learning & Employment Wallet";
+    title = "Kentucky Learning & Employment Wallet";
     envName = environment.name;
 
     private footerSettingsSubscription: Subscription;
@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 });
             }
         }
-        catch(e)
+        catch(e) 
         {
             console.error('Error in posthog:init', e);
         }

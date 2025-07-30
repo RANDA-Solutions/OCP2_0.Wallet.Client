@@ -15,8 +15,7 @@ import { CredentialService } from "@core/services/credentials.service";
 import { PackageDeletePopupComponent } from "@modules/packages/components/package-delete-popup/package-delete-popup.component";
 import { RevocationService } from "@core/services/revocation.service";
 import { RevocationResponseModel } from "@shared/models/revocationResponseModel";
-import { faShare, faTrash, faExclamationCircle, faBan } from "@fortawesome/free-solid-svg-icons";
-import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
+import { faShare, faTrash, faExclamationCircle, faBan, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 @UntilDestroy()
 @Component({
@@ -26,7 +25,7 @@ import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
 export class PackageDetailsComponent implements OnInit {
     faTrash = faTrash;
     faShare = faShare;
-    faShieldCheck = faShieldCheck;
+    faCircleCheck = faCircleCheck;
     faExclamationCircle = faExclamationCircle;
     faBan = faBan;
     package: PackageDetailsResponseModel = new PackageDetailsResponseModel();

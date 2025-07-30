@@ -1,13 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { UntilDestroy } from "@ngneat/until-destroy";
-import { ApiBadRequestResponse } from "@shared/models/apiBadRequestResponse";
-import { ApiOkResult } from "@shared/models/apiOkResponse";
+import { ActivatedRoute, Router } from "@angular/router";
+import { environment } from "@environment/environment";
 import { SetupService } from "@modules/access/services/setup.service";
+import { UntilDestroy } from "@ngneat/until-destroy";
+import { AccountSetupStatusChangedEvent } from "@shared/interfaces/accountSetupStatusChanged";
+import { ApiOkResult } from "@shared/models/apiOkResponse";
 import { AccountSetupStatusEnum } from "@shared/models/enums/accountSetupStatusEnum";
 import { VerifyEmailResponseModel } from "@shared/models/verifyEmailResponseModel";
-import { AccountSetupStatusChangedEvent } from "@shared/interfaces/accountSetupStatusChanged";
-import { environment } from "@environment/environment";
 import posthog from "posthog-js";
 
 @UntilDestroy()
@@ -21,7 +20,8 @@ import posthog from "posthog-js";
 })
 export class SetupAccountComponent implements OnInit {
     errorMessage: string;
-    showSpinner: boolean = false;
+    viewState: 'loading' | 'results'; 
+
 
     email: string | null;
     accessCode: string | null;
@@ -48,13 +48,12 @@ export class SetupAccountComponent implements OnInit {
                     { email: this.email.toLocaleUpperCase() } // optional: set person properties
                 );
             }
-
             this.checkEmail();
         });
     }
 
     checkEmail() {
-        this.showSpinner = true;
+        this.viewState = 'loading'; // Show the spinner
         this.errorMessage = null;
         this.setupService.getAccountStatus(this.email).subscribe(data => {
             if (environment.debug) console.log("SetupAccountComponent.ngOnInit data", data);
@@ -62,12 +61,32 @@ export class SetupAccountComponent implements OnInit {
             if (data.statusCode == 200) {
                 const model = (<ApiOkResult<VerifyEmailResponseModel>>data).result;
                 this.handleStatusChange({ status: model.status, accessCode: null });
+                this.viewState = 'results'; // Switch to results view
             } else {
                 this.errorMessage =
                     "An unexpected error occurred retrieving your account information. Please check your network connection and try again.";
                 console.error("SetupAccountComponent.checkEmail", data);
+                this.viewState = 'results'; // Show the spinner
             }
-            this.showSpinner = false;
+        });
+    }
+
+    requestVerification() {
+        this.viewState = 'loading'; // Show the spinner
+        this.errorMessage = null;
+        this.setupService.requestAccountVerification(this.email).subscribe(data => {
+            if (environment.debug) console.log("SetupAccountComponent.requestVerification data", data);
+
+            if (data.statusCode == 200) {
+                const model = (<ApiOkResult<VerifyEmailResponseModel>>data).result;
+                this.handleStatusChange({ status: model.status, accessCode: null });
+                this.viewState = 'results'; // Switch to results view
+            } else {
+                this.errorMessage =
+                    "An unexpected error occurred retrieving your account information. Please check your network connection and try again.";
+                console.error("SetupAccountComponent.checkEmail", data);
+                this.viewState = 'results'; // Show the spinner
+            }
         });
     }
 

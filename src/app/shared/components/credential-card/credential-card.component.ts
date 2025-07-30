@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { CredentialCardResponseModel } from "./credentialCardResponseModel";
-import { ApiOkResult } from "@shared/models/apiOkResponse";
-import { UtilsService } from "@core/services/utils.service";
-import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
-import { EvidencePopupComponent } from "../evidence-popup/evidence-popup.component";
-import { CredentialService } from "@core/services/credentials.service";
 import { Router } from "@angular/router";
+import { CredentialService } from "@core/services/credentials.service";
+import { RevocationService } from "@core/services/revocation.service";
+import { UtilsService } from "@core/services/utils.service";
+import { faBan, faExclamationCircle, faFile, faInfoCircle, faShare, faTrash, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { ShareCredentialsRequestModel } from "@modules/shares/pages/share-select-credentials/shareCredentialsRequestModel";
+import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { ApiOkResult } from "@shared/models/apiOkResponse";
 import { ListItem } from "@shared/models/listItem";
 import { RevocationResponseModel } from "@shared/models/revocationResponseModel";
-import { RevocationService } from "@core/services/revocation.service";
-import { faBan, faExclamationCircle, faFile, faInfoCircle, faShare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
+import { CredentialAssociationPopupComponent } from "../credential-association-popup/credential-association-popup.component";
+import { EvidencePopupComponent } from "../evidence-popup/evidence-popup.component";
+import { CredentialCardResponseModel } from "./credentialCardResponseModel";
 
 @Component({
     selector: "[app-credential-card]",
@@ -21,7 +21,7 @@ import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
 export class CredentialCardComponent implements OnInit {
     faShare = faShare;
     faTrash = faTrash;
-    faShieldCheck = faShieldCheck;
+    faCircleCheck = faCircleCheck;
     faExclamationCircle = faExclamationCircle;
     faInfoCircle = faInfoCircle;
     faBan = faBan;
@@ -37,6 +37,7 @@ export class CredentialCardComponent implements OnInit {
     credentialSpinner = false;
     documentSpinner = false;
     showAlignmentDetails = false;
+    showAssociationDetails = false;
     private debug = false;
 
     constructor(
@@ -63,6 +64,10 @@ export class CredentialCardComponent implements OnInit {
 
         const credential = { ...this.credential };
         this.onSelect.emit({ credential, selected: this.selected });
+    }
+
+    toggleAssociationDetails() {
+        this.showAssociationDetails = !this.showAssociationDetails;
     }
 
     getData() {
@@ -131,4 +136,19 @@ export class CredentialCardComponent implements OnInit {
             },
         });
     }
+
+    showAssociation(association: { verifiableCredentialId: number; achievementName: string }) {
+      let ngbModalOptions: NgbModalOptions = {
+          backdrop: "static",
+          keyboard: true,
+          centered: true,
+          size: "lg",
+          ariaLabelledBy: "modal-basic-title",
+      };
+
+      const modalRef = this.modalService.open(CredentialAssociationPopupComponent, ngbModalOptions);
+      modalRef.componentInstance.credentialId = association.verifiableCredentialId;
+      modalRef.componentInstance.credentialName = association.achievementName;
+    }
+
 }

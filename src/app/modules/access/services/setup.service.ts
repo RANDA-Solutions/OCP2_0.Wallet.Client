@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable, NgZone } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { UtilsService } from "@core/services/utils.service";
 import { environment } from "@environment/environment";
-import { VerifyAccessCodeRequestModel } from "@shared/models/verifyAccessCodeRequestModel";
 import { AccountSetupRequestModel } from "@shared/models/accountSetupRequestModel";
 import { ApiResponse } from "@shared/models/apiResponse";
+import { VerifyAccessCodeRequestModel } from "@shared/models/verifyAccessCodeRequestModel";
 import { Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 
@@ -24,6 +24,16 @@ export class SetupService {
         if (this.debug) console.log(`SetupService getAccountStatus ${urlApi}`);
 
         return this.http.get<ApiResponse>(urlApi).pipe(catchError(err => this.utilsService.handleError(err)));
+    }
+
+    requestAccountVerification(email: string): Observable<ApiResponse> {
+        const urlApi = `${environment.apiEndPoint}account/setup/email/accessCode`;
+        var model = {email};
+
+        if (this.debug) console.log(`SetupService requestAccountVerification ${urlApi}`);
+
+        return this.http.post<ApiResponse>(urlApi, model)
+            .pipe(catchError(err => this.utilsService.handleError(err)));
     }
 
     verifyEmail(model: VerifyAccessCodeRequestModel): Observable<ApiResponse> {
