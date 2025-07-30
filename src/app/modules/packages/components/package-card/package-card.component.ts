@@ -6,8 +6,7 @@ import { Router } from "@angular/router";
 import { RevocationService } from "@core/services/revocation.service";
 import { ApiOkResult } from "@shared/models/apiOkResponse";
 import { RevocationResponseModel } from "@shared/models/revocationResponseModel";
-import { faExclamationCircle, faShare, faBan } from "@fortawesome/free-solid-svg-icons";
-import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
+import { faExclamationCircle, faShare, faBan, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
     selector: "[app-package-card]",
@@ -16,7 +15,7 @@ import { faShieldCheck } from "@fortawesome/pro-solid-svg-icons";
 })
 export class PackageCardComponent implements OnChanges, OnDestroy, OnInit {
     faShare = faShare;
-    faShieldCheck = faShieldCheck;
+    faCircleCheck = faCircleCheck;
     faExclamationCircle = faExclamationCircle;
     faBan = faBan;
     @Input() package: PackageSearchResponseModel;

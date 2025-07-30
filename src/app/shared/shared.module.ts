@@ -2,27 +2,28 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { LimitTextComponent } from "./components/limit-text/limit-text.component";
-import { SpinnerComponent } from "./components/spinner/spinner.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { PaginationComponent } from "./components/pagination/pagination.component";
-import { NotificationsComponent } from "./components/notifications/notifications.component";
-import { PasswordRequirementsComponent } from "./components/password-requirements/password-requirements.component";
-import { ScreenSizeComponent } from "./components/screen-size/screen-size.component";
-import { DisableControlDirective } from "./directives/disable-control.directive";
-import { NotificationPopupComponent } from "./components/notification-popup/notification-popup.component";
-import { EvidencePopupComponent } from "./components/evidence-popup/evidence-popup.component";
 import { PhoneNumberPipe } from "../pipes/phone-number.pipe";
 import { CollectionCardComponent } from "./components/collection-card/collection-card.component";
-import { ShareHistoryCardComponent } from "./components/share-history-card/share-history-card.component";
-import { CredentialCardComponent } from "./components/credential-card/credential-card.component";
-import { PaginationService } from "./components/pagination/pagination.service";
 import { CollectionDeletePopupComponent } from "./components/collection-delete-popup/collection-delete-popup.component";
+import { CredentialAssociationPopupComponent } from "./components/credential-association-popup/credential-association-popup.component";
+import { CredentialCardComponent } from "./components/credential-card/credential-card.component";
 import { CredentialDeletePopupComponent } from "./components/credential-delete-popup/credential-delete-popup.component";
-import { ProfileService } from "./components/profile/profile.service";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { EvidencePopupComponent } from "./components/evidence-popup/evidence-popup.component";
+import { LimitTextComponent } from "./components/limit-text/limit-text.component";
+import { NotificationPopupComponent } from "./components/notification-popup/notification-popup.component";
+import { NotificationsComponent } from "./components/notifications/notifications.component";
+import { PaginationComponent } from "./components/pagination/pagination.component";
+import { PaginationService } from "./components/pagination/pagination.service";
+import { PasswordRequirementsComponent } from "./components/password-requirements/password-requirements.component";
 import { ProfileComponent } from "./components/profile/profile.component";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { ProfileService } from "./components/profile/profile.service";
+import { ScreenSizeComponent } from "./components/screen-size/screen-size.component";
+import { ShareHistoryCardComponent } from "./components/share-history-card/share-history-card.component";
+import { SpinnerComponent } from "./components/spinner/spinner.component";
+import { DisableControlDirective } from "./directives/disable-control.directive";
 
 @NgModule({
     imports: [CommonModule, RouterModule, NgbModule, FontAwesomeModule],
@@ -46,6 +47,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
         CollectionDeletePopupComponent,
         ShareHistoryCardComponent,
         CredentialCardComponent,
+        CredentialAssociationPopupComponent
     ],
     exports: [
         //InterceptSubmitDirective,

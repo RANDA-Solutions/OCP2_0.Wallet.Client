@@ -1,4 +1,5 @@
 import { CredentialCardAlignmentResponseModel } from "./credentialCardAlignmentResponseModel";
+import { CredentialCardAssociationResponseViewModel } from "./CredentialCardAssociationResponseViewModel";
 import { CredentialCardResultResponseModel } from "./credentialCardResultResponseModel";
 
 export class CredentialCardResponseModel {
@@ -20,6 +21,7 @@ export class CredentialCardResponseModel {
     isVerified: boolean;
     alignments: CredentialCardAlignmentResponseModel[];
     results: CredentialCardResultResponseModel[];
+    associations: CredentialCardAssociationResponseViewModel[];
     hasEvidence: boolean;
     isRevoked: boolean;
     revokedReason: string;
@@ -43,6 +45,7 @@ export class CredentialCardResponseModel {
         this.isVerified = null;
         this.alignments = new Array<CredentialCardAlignmentResponseModel>();
         this.results = new Array<CredentialCardResultResponseModel>();
+        this.associations = new Array<CredentialCardAssociationResponseViewModel>();
         this.hasEvidence = false;
         this.isRevoked = false;
         this.revokedReason = null;

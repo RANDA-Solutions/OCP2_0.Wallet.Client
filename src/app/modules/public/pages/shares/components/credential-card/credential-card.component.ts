@@ -1,21 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ApiOkResult } from "@shared/models/apiOkResponse";
+import { RevocationService } from "@core/services/revocation.service";
 import { UtilsService } from "@core/services/utils.service";
+import {
+  faBan,                // "ban" or "no" symbol
+  faExclamationCircle,  // warning / alert
+  faFile,               // document/file
+  faInfoCircle,         // information icon
+  faCircleCheck           // generic shield (used instead of faShieldCheck)
+} from "@fortawesome/free-solid-svg-icons"
 import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { ApiOkResult } from "@shared/models/apiOkResponse";
+import { RevocationResponseModel } from "@shared/models/revocationResponseModel";
 import { CredentialCardResponseViewModel } from "../../services/credentialCardResponseViewModel";
 import { CredentialService } from "../../services/credentials.service";
 import { PublicShareRequestViewModel } from "../../services/publicShareRequestViewModel";
 import { PublicEvidencePopupComponent } from "../evidence-popup/evidence-popup.component";
-import { RevocationResponseModel } from "@shared/models/revocationResponseModel";
-import { RevocationService } from "@core/services/revocation.service";
-import { faShieldCheck, faBan, faExclamationCircle, faInfoCircle, faFile } from "@fortawesome/pro-solid-svg-icons";
 @Component({
     selector: "[public-credential-card]",
     templateUrl: "./credential-card.component.html",
     styleUrls: ["./credential-card.component.scss"],
 })
 export class PublicCredentialCardComponent implements OnInit {
-    faShieldCheck = faShieldCheck;
+    faCircleCheck = faCircleCheck;
     faBan = faBan;
     faExclamationCircle = faExclamationCircle;
     faInfoCircle = faInfoCircle;
@@ -31,6 +37,7 @@ export class PublicCredentialCardComponent implements OnInit {
     credentialSpinner = false;
     documentSpinner = false;
     showAlignmentDetails = false;
+    showAssociationDetails = false;
     private debug = false;
 
     constructor(
@@ -99,6 +106,10 @@ export class PublicCredentialCardComponent implements OnInit {
 
     toggleAlignmentDetails() {
         this.showAlignmentDetails = !this.showAlignmentDetails;
+    }
+
+    toggleAssociationDetails() {
+        this.showAssociationDetails = !this.showAssociationDetails;
     }
 
     isDateInThePast(date: Date): boolean {

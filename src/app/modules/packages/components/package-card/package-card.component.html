@@ -15,7 +15,7 @@
                 <div class="d-flex gap-3 align-items-center">
                     <div class="badge-img-container mb-2" *ngIf="!!package.effectiveImageUrl">
                         <img
-                            class="rounded-circle img-fluid"
+                            class="img-fluid"
                             src="{{ package.effectiveImageUrl }}"
                             alt="{{ package.issuerName }} badge photo"
                         />
@@ -29,7 +29,7 @@
                             >
                                 <fa-icon
                                     class="text-blueDark"
-                                    [icon]="faShieldCheck"
+                                    [icon]="faCircleCheck"
                                     title="The credential is unaltered and has a verified issuer signature."
                                 ></fa-icon>
                                 Verified

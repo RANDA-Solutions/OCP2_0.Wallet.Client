@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { EvidenceService } from "../evidence-popup/evidence.service";
-import { EvidenceViewModel } from "@shared/models/evidenceViewModel";
 import { ApiBadRequestResponse } from "@shared/models/apiBadRequestResponse";
 import { ApiOkResult } from "@shared/models/apiOkResponse";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { EvidenceViewModel } from "@shared/models/evidenceViewModel";
+import { EvidenceService } from "../evidence-popup/evidence.service";
 
 @Component({
     selector: "app-evidence-popup",
@@ -39,24 +39,37 @@ export class EvidencePopupComponent implements OnInit {
     }
 
     openfile(evidence: EvidenceViewModel) {
+        
         const fileUrl = evidence.evidenceUrl;
-        const mimeType = fileUrl.split(",")[0].match(/:(.*?);/)[1];
-        const base64Data = fileUrl.split(",")[1];
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: mimeType });
-        const blobUrl = URL.createObjectURL(blob);
+        // Check if fileUrl is a Base64 string or a regular URL
+        if (fileUrl.startsWith("data:")) {
+            const mimeType = fileUrl.split(",")[0].match(/:(.*?);/)[1];
+            const base64Data = fileUrl.split(",")[1];
+            const byteCharacters = atob(base64Data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: mimeType });
+            const blobUrl = URL.createObjectURL(blob);
 
-        // Open the Blob URL in a new tab
-        const newWindow = window.open(blobUrl, "_blank");
-        if (newWindow) {
-            newWindow.focus();
-        } else {
-            console.log("Failed to open PDF. Please check your popup blocker.");
+            // Open the Blob URL in a new tab
+            const newWindow = window.open(blobUrl, "_blank");
+            if (newWindow) {
+                newWindow.focus();
+            } else {
+                console.log("Failed to open PDF. Please check your popup blocker.");
+            }
+        }
+        else{
+            // It's a regular URL
+            const newWindow = window.open(fileUrl, "_blank");
+            if (newWindow) {
+                newWindow.focus();
+            } else {
+                console.log("Failed to open file. Please check your popup blocker.");
+            }
         }
     }
 
