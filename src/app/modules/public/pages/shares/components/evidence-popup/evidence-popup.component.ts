@@ -43,7 +43,7 @@ export class PublicEvidencePopupComponent implements OnInit {
 
     openfile(evidence: EvidenceViewModel) {
         const fileUrl = evidence.evidenceUrl;
-        if (fileUrl.startsWith("data:")) {        
+        if (fileUrl.startsWith("data:")) {
             const mimeType = fileUrl.split(",")[0].match(/:(.*?);/)[1];
             // Convert base64 to Blob
             const base64Data = fileUrl.split(",")[1];
